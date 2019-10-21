@@ -1,0 +1,88 @@
+<%- include('../templates/header') %>
+<section class="dash-inner-sec">
+    <div class="container">
+        <div class="row">
+          <% if(success_msg!=undefined){ %>
+                        <span class="flash_msg" style="color:green;"><%= success_msg %></span>
+                        <% }%>
+             <div class="col-lg-12 col-md-12">
+                <div class="transaction-box">
+                  <h5 class="green-heading">All Transactions</h5>
+                <div class="table-responsive">
+                  <% if(all_transaction !="" && all_transaction!=null)
+                        { %>
+                        <table id="recent-orders" class="table table-hover table-xl mb-0">
+                        <thead>
+                        <tr>
+                        <th class="border-top-0">S.No</th>
+                        <th class="border-top-0">Date</th>
+                        <th class="border-top-0">Transaction Type</th>
+                        <th class="border-top-0">Transaction Id</th>
+                        <th class="border-top-0">Sender Address</th>
+                        <th class="border-top-0">Receiver Address</th>
+                        <th class="border-top-0">Status</th>
+                        <th class="border-top-0">Total RWN</th>    
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% 
+                        var n=1;
+                        all_transaction.forEach(function (transaction) {
+
+                        %>
+                        <tr>
+                        <td class="border-top-0"><%-n%></td>
+                        <% 
+                        var tr_date=transaction.created_at; 
+                        var date1 = dateFormat(tr_date, "dd, mmm  yyyy, h:MM:ss ");
+                        %>
+                        <td class="border-top-0"><%-date1%></td>
+
+                       
+                        <% if(transaction.receiver_wallet_address==user_wallet) { %>
+                               <td class="border-top-0">Receive</td> 
+                        <% } else { %>
+                            <td class="border-top-0"><%-transaction.transaction_type%> </td>
+                            <% } %>   
+                        <td class="border-top-0"><%-transaction.hash%> </td>     
+                        <td class="border-top-0"><%-transaction.sender_wallet_address%></td>
+                        <td class="border-top-0"><%-transaction.receiver_wallet_address%></td>
+                        <td class="border-top-0"><%- transaction.payment_status.charAt(0).toUpperCase()+ transaction.payment_status.slice(1)%></td>
+                        <td class="border-top-0"><%-transaction.amount%> <%-transaction.token_type%></td>
+                        </tr>
+                        <%  n++;}); %>
+                        </tbody>
+                        </table>
+
+                       <% } else { %>
+                              <p>No Transactions.</p>
+                        <% } %>
+                        </div>
+                </div>
+             </div>
+        </div>
+    </div>
+</section>
+<%- include('../templates/footer') %>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#recent-orders').DataTable({
+        "order": [],
+    });
+} );
+</script>
+<script type="text/javascript">
+$(document).ready(function () {
+
+var flash_msg=$('.flash_msg').html();
+if(flash_msg!="" && flash_msg!=undefined)
+{
+  setTimeout(function(){ $('.flash_msg').html('');},4000);
+}    
+});
+</script>
+
+
+

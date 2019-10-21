@@ -1,0 +1,175 @@
+{{> admin_inner_header}}
+{{> admin_inner_sidebar}}
+<div class="content-wrapper right-side">
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                   <section class="content-header">
+                    <h3> Basic Token Details</h3>
+                    <ol class="breadcrumb">
+                        {{!-- <li><a href=""><i class="fa fa-dashboard"></i>Home</a></li> --}}
+                        <li><a href="javascript:void(0);">Dashboard</a></li>
+                        <li><a href="javascript:void(0);" class="active">Basic Setting</a></li>
+                    </ol>
+          </section>
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  {{#if expressFlash.token_fail}}
+                    <div class="alert alert-danger">{{expressFlash.token_fail}}</div>
+                  {{/if}}
+
+                  {{#if expressFlash.token_success}}
+                    <div class="alert alert-success">{{expressFlash.token_success}}</div>
+                  {{/if}}
+ 
+             <!--    {{basicDetails}}
+                {{basicDetails.gift_token_price}} -->
+
+                  <form class="forms-sample" id="edit_user_form" action='/update-token-basic-details' method='post'>
+                    <div class="form-group">
+                      <label for="exampleInputName1">Token Name <span style="color: red">*</span></label>
+                      <input type="text" name="token_name" class="form-control" id="" placeholder="Token Name" data-rule-required="true" data-msg-required="Please Enter Token Name." value="{{basicDetails.token_name}}">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="exampleInputName1">Token Symbol <span style="color: red">*</span></label>
+                      <input type="text" name="token_symbol" class="form-control" id="" placeholder="Token Symbol" data-rule-required="true" data-msg-required="Please Enter Token Symbol." value="{{basicDetails.token_symbol}}">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputName1">Token Protocol <span style="color: red">*</span></label>
+                      <input type="text" name="project_protocol" class="form-control" id="" placeholder="Token Protocol" data-rule-required="true" data-msg-required="Please Enter Token Protocol." value="{{basicDetails.project_protocol}}">
+                    </div> 
+
+                    <div class="form-group">
+                      <label for="exampleInputName1">Worth of aGifttoken<span style="color: red">*</span></label>
+                      <input type="text" name="worth_gift_token" class="form-control" id="" placeholder="Token Worth" data-rule-required="true" data-msg-required="Please Enter Worth of aGifttoken." value="{{basicDetails.worth_gift_token}}" onkeypress="return isNumdeciKey(event);">
+                    </div>
+
+
+                    <div class="form-group">
+                      <label for="exampleInputName1">Total Token Supply <span style="color: red">*</span></label>
+                      <input type="text" name="token_total_supply" class="form-control" id="" placeholder="Total Token Supply" data-rule-required="true" data-msg-required="Please Enter Token Supply." value="{{basicDetails.total_token_supply}}" >
+                    </div>
+
+                    <div class="form-group">
+                      <label for="exampleInputEmail3">Funds Raised <span style="color: red">*</span></label>
+                      <input type="text" name="token_issued" class="form-control" id="" placeholder="Eather value" data-rule-required="true" data-msg-required="Please Enter Funds Raised." onkeypress="return isNumdeciKey(event);" value="{{basicDetails.token_issued}}">
+                    </div>
+
+
+                    <div class="form-group">
+                      <label for="exampleInputEmail3">aGift Token Price(USD) <span style="color: red">*</span></label>
+                      <input type="text" name="gift_token_price" class="form-control" id="" placeholder="Eather value" data-rule-required="true" data-msg-required="Please Enter aGift Token Price ." onkeypress="return isNumdeciKey(event);" value="{{basicDetails.gift_token_price}}" onblur="check_value(this.value);">
+                      <span id="gift_token_price_error" class="error_validate"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                      <label for="exampleInputEmail3">Hard Cap <span style="color: red">*</span></label>
+                      <input type="text" name="hard_cap" class="form-control" id="" placeholder="Eather value" data-rule-required="true" data-msg-required="Please Enter Hard Cap."  value="{{basicDetails.hard_cap}}">
+                     <!--  onkeypress="return isNumdeciKey(event);" -->
+                    </div>
+
+                    <div class="form-group">
+                      <label for="exampleInputEmail3">Soft Cap <span style="color: red">*</span></label>
+                      <input type="text" name="soft_cap" class="form-control" id="" placeholder="Eather value" data-rule-required="true" data-msg-required="Please Enter Soft Cap."  value="{{basicDetails.soft_cap}}">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="exampleInputEmail3">Total Sales Reached <span style="color: red">*</span></label>
+                      <input type="text" name="total_sales_reached" class="form-control" id="" placeholder="Total Sales" data-rule-required="true" data-msg-required="Please Enter Total Sales." onkeypress="return isNumdeciKey(event);" value="{{basicDetails.total_sales_reached}}">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="exampleInputEmail3">Exchange Rate <span style="color: red">*</span></label>
+                      <input type="text" name="exchange_rate" class="form-control" id="" placeholder="Eather value" data-rule-required="true" data-msg-required="Please Enter Exchange Rate." onkeypress="return isNumdeciKey(event);" value="{{basicDetails.exchange_rate}}">
+                    </div>
+
+
+                    <div class="form-group">
+                      <label for="exampleInputName1">Sale Start <span style="color: red">*</span></label>
+                      <input type="text" name="sale_start" class="datetimepicker form-control start_date_time" id="" placeholder="Sale Start" data-rule-required="true" data-msg-required="Please Enter Start Date Time." value="{{dateFormat basicDetails.start_date "YYYY/MM/DD hh:mm:ss"}}">
+                    </div>
+
+{{!-- 
+                    <div class="form-group">
+                      <label for="exampleInputName1">Sale End</label>
+                      <input type="text" name="sale_end" class="form-control datetimepicker  end_date_time" id="" placeholder="Sale End" data-rule-required="true" data-msg-required="Please Enter End Date Time." value="{{dateFormat basicDetails.end_date "YYYY/MM/DD hh:mm:ss"}}">
+                    </div> --}}
+
+
+                    <input type="hidden" value="{{basicDetails._id}}" name="edit_id">
+
+                    <button type="submit" class="btn btn-success mr-2" id="upbtn">Update</button>
+                    <a href="/admin-dashboard" class="btn btn-light">Cancel</a>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  {{> admin_inner_footer}}
+  <script type="text/javascript">
+
+               $(document).ready(function (){
+               $('#edit_user_form').validate({
+                     onfocusout: function(element) {
+                           this.element(element);
+                     },
+                     errorClass: 'error_validate',
+                     errorElement:'span',
+                     highlight: function(element, errorClass) {
+                      $(element).removeClass(errorClass);
+                     }
+                   });
+
+               });
+
+    /**disable previous time**/
+
+ jQuery('.start_date_time').datetimepicker({
+  onShow:function( ct ){
+   this.setOptions({
+
+    //maxDate:jQuery('.end_date_time').val()?jQuery('.end_date_time').val():false
+   })
+   $(".datetimepicker").datetimepicker({minDate: '0'});
+  },
+
+ });
+
+ jQuery('.end_date_time').datetimepicker({
+   //minDate:0,
+   //onShow:logic
+
+  onShow:function( ct ){
+   this.setOptions({
+    minDate:jQuery('.start_date_time').val()?jQuery('.start_date_time').val():0
+   })
+  },
+ });
+
+
+$('.start_date_time').keypress(function(e) {
+    // e.preventDefault();
+});
+
+$('.end_date_time').keypress(function(e) {
+    // e.preventDefault();
+});
+
+</script>
+<script type="text/javascript">
+  
+function check_value(id){ 
+ if(id==="0" || id==="00" || id==="000" || id==="0000"){
+    $("#gift_token_price_error").text("Token price should be more than 0");
+    $("#upbtn").prop('disabled',true); 
+    return false;
+ }else{
+  $("#gift_token_price_error").text("");
+   $("#upbtn").prop('disabled',false); 
+ }
+}
+</script>

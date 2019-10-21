@@ -1,0 +1,97 @@
+{{> admin_inner_header}}
+{{> admin_inner_sidebar}}
+  <div class="content-wrapper right-side">
+ 
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+
+             
+              <div class="card">
+                   <section class="content-header">
+                    <h3> Enquiry List </h3>
+                    <ol class="breadcrumb">
+{{!--                         <li><a href=""><i class="fa fa-dashboard"></i> Home</a></li>
+ --}}                        <li><a href="javascript:void(0);">Dashboard</a></li>
+                        <li><a href="javascript:void(0);" class="active">Enquiry List</a></li>
+                    </ol>
+          </section>
+                <div class="card-body">
+                  {{#if expressFlash.edit_fail}}
+                    <div class="alert alert-danger">{{expressFlash.edit_fail}}</div>
+                  {{/if}}
+
+                  {{#if expressFlash.edit_success}}
+                    <div class="alert alert-success">{{expressFlash.edit_success}}</div>
+                  {{/if}}
+                  <div class="table-responsive">
+                    <table class="table table-striped" id="user_table" cellspacing="0" width="100%">
+                      <thead>
+                        <tr>
+                          <th>
+                            S.No.
+                          </th>
+                          <th>
+                            Name
+                          </th>
+                          <th>
+                            Email
+                          </th>
+                          <th>
+                            Message
+                          </th>
+                          <th>
+                            Created At
+                          </th>
+                        </tr>
+                      </thead>
+                         <tbody>
+                      {{#if contactDetails}}
+                      {{#each contactDetails}}
+                      <tr>
+                        <td>{{increment_variable @index}}</td>
+                        <td>{{escape this.name}}</td>
+                        <td style="white-space: normal;">{{this.email}}</td>
+                        <td style="white-space: normal;">{{this.message}}</td>
+                        <td>{{dateFormat created_at "YYYY-MM-DD hh:mm:ss"}}</td>
+                    </tr>
+                      {{/each}}
+                      {{/if}}
+                    </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{> admin_inner_footer}}
+
+    <script type="text/javascript">
+            
+        $(document).ready(function () {
+
+        $('#user_table').DataTable({
+
+           
+        });
+        $('#user_table_filter input').addClass('form-control');
+        $('#user_table_filter label').addClass('card-title');
+        $('#user_table_length label').addClass('card-title');
+        $('#user_table_paginate a').addClass('card-title');
+        $('#user_table_info').addClass('card-title');
+
+    });
+
+     function confirm_deletion(){
+
+        if(confirm('Really you want to delete user?')){
+
+          return true;
+
+        }else{
+
+          return false;
+        }
+     }
+
+</script>

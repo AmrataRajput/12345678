@@ -1,0 +1,251 @@
+{{> admin_inner_header}}
+{{> admin_inner_sidebar}}
+<div class="content-wrapper right-side">
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                   <section class="content-header">
+                    <h3> Send Token </h3>
+                   
+          </section>
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  {{#if expressFlash.fail}}
+                    <div class="flash_msg" style="font-weight:bold;margin-bottom:20px;color:red;">{{expressFlash.fail}}</div>
+                  {{/if}}
+
+                  {{#if expressFlash.success}}
+                    <div class="flash_msg" style="font-weight:bold;margin-bottom:20px;color:green;">{{expressFlash.success}}</div>
+                  {{/if}}
+                  <form class="forms-sample" id="edit_user_form" action="javascript:void(0);" method='post'>
+                    <div class="form-group">
+                      <label for="exampleInputName1">Recipient Wallet Address <span style="color: red">*</span></label>
+                      <input type="text" class="form-control" data-rule-required="true" name="recipient" data-msg-required="Please enter Recipient." id="recipient">
+                       <span class="show_err" style="color: red;"></span>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail3">Withdraw From <span style="color: red">*</span></label>
+                    
+                       <input type="text" readonly="readonly" class="form-control"  name="withdraw_from" id="withdraw_from" data-rule-required="true" data-msg-required="Please enter Withdraw From." value="0xd44b028E32230DA41D024D16c0F7f6cE4902FB76" >
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputName1">Amount (ROWAN) <span style="color: red">*</span></label>
+                     <input type="number" min="0" class="form-control bg-white" name="amount" id="amount" placeholder="0.00" data-rule-required="true"  data-msg-required="Please enter Amount." onkeypress="return isNumdeciKey(event);">
+                     <!-- <div class="input-group-append">
+                                            <span class="input-group-text bg-white">ROWAN</span>
+                                          </div> -->
+                                            <!-- <span class="input-group-text bg-white">ROWAN</span> -->
+                                         
+                                           <span for="amount" class="error_validate"></span>
+                    </div>
+                    <div class="form-group">
+
+                      <input type='hidden' name='user_m_id' value="{{user_main_id}}">
+                    </div>
+                    <!-- <button type="submit" class="btn btn-success mr-2">Submit</button>
+                    <a href="/admin-dashboard" class="btn btn-light">Cancel</a> -->
+                    <div class="col-md-12">
+                                   <div class="text-center mlti-btn">
+                                      <input type="reset" class="btn btn-success mr-2" value="Reset" id="cancel_btn" name="cancel">
+                                     <!--  <button class="btn btn-common light-green" data-toggle="modal" data-target="#keyModal">Send BTC</button> -->
+                                     <input type="submit" id="sub_btn" name="submit" value="Send" class="btn btn-success mr-2">
+                                   </div>
+                                </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal -->
+<div class="modal fade modal-key" id="keyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <form id="key-form" method="post" action="/submit-token">
+            <h3 class="green-heading text-center">Enter Your Passphrase</h3>
+             <p class="text-upper text-center">Please enter your Passphrase stored with you.</p> 
+            <div class="form-group">
+              <input type="password" name="enter_passphrase" class="form-control" id="enter_passphrase" data-rule-required="true"  data-msg-required="Please enter Passphrase." autocomplete="off" >
+            </div>
+
+          <input type="hidden" name="sender_address" id="sender_address" value="">
+
+          <input type="hidden" name="reciver_address" id="reciver_address" value="">
+
+          <input type="hidden" name="amount_send" id="amount_send" value="">
+
+          <input type="hidden" name="user_cr_pass" id="user_cr_pass" value=""> 
+
+          <input type="hidden" name="get_wallet_id" id="get_wallet_id" value="">
+          
+
+            <div class="text-center mt-4">
+              <input type="submit" name="submit1" value="Submit" id="sub_btn1" class="btn btn-common light-green">
+              <!-- <a href="send-history.php" class="btn btn-common light-green">Submit</a> -->
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+  </div>
+</div>
+  {{> admin_inner_footer}}
+ <!--  <script type="text/javascript">
+
+               $(document).ready(function (){
+               $('#edit_user_form').validate({
+                     onfocusout: function(element) {
+                           this.element(element);
+                     },
+                     errorClass: 'error_validate',
+                     errorElement:'span',
+                     highlight: function(element, errorClass) {
+                      $(element).removeClass(errorClass);
+                     }
+                   });
+
+               });
+</script> -->
+
+<script src="/assets/js/jquery.validate.min.js"></script>
+<script type="text/javascript">
+
+$('#edit_user_form').validate({
+      onfocusout: function(element) {
+      this.element(element);
+      },
+      errorClass: 'error_validate',
+      errorElement:'span',
+      highlight: function(element, errorClass) {
+      $(element).removeClass(errorClass);
+      },
+      submitHandler:function(form)
+         {   
+
+           var address=$('#recipient').val();
+                if(address != "")
+                {
+                if (!/^(0x)?[0-9a-f]{40}$/i.test(address)) {
+                alert('Please enter valid wallet address.');
+                // $('#eth_address_err').html('Please enter valid wallet address');
+                $('#recipient').val("");
+                return false;
+                } 
+                else(/^(0x)?[0-9a-f]{40}$/.test(address) || /^(0x)?[0-9A-F]{40}$/.test(address))
+                {
+                   $("#keyModal").modal("show");   
+                  var sender_add=$('#withdraw_from').val();
+                  var recier_add=$('#recipient').val();
+                  var send_amount=$('#amount').val();
+                  var correct_pass=$('#passphrase').val();
+                  var wallet_id=$('#wallet_id').val();
+
+                  $('#enter_passphrase').val("");
+
+                  $('#sender_address').val(sender_add);
+                  $('#reciver_address').val(recier_add);
+                  $('#amount_send').val(send_amount);
+                  $('#user_cr_pass').val(correct_pass);
+                  $('#get_wallet_id').val(wallet_id);
+                } 
+                }
+                else
+                {
+                  $("#keyModal").modal("show");   
+                  var sender_add=$('#withdraw_from').val();
+                  var recier_add=$('#recipient').val();
+                  var send_amount=$('#amount').val();
+                  var correct_pass=$('#passphrase').val();
+                  var wallet_id=$('#wallet_id').val();
+
+                  $('#enter_passphrase').val("");
+
+                  $('#sender_address').val(sender_add);
+                  $('#reciver_address').val(recier_add);
+                  $('#amount_send').val(send_amount);
+                  $('#user_cr_pass').val(correct_pass);
+                  $('#get_wallet_id').val(wallet_id);
+                }
+
+         }
+      });
+</script>
+ <script> 
+      
+       
+            $("#recipient").blur(function() { 
+              var reciver_address=$('#recipient').val();
+              var sender_address=$('#withdraw_from').val();
+                // alert(reciver_address.trim());
+                // alert(sender_address.trim());
+                
+                if (reciver_address.trim() == sender_address.trim()) {
+                   $('.show_err').html("Recipient and Sender address both couldn't be same.");
+                     // $('.show_err').html('hghjjhjh'); 
+                     setTimeout(function(){ $('.show_err').html('');$('#recipient').val('');
+              },4000);
+
+                }
+            }); 
+      
+    </script> 
+
+<script type="text/javascript">
+$('#key-form').validate({
+      onfocusout: function(element) {
+      this.element(element);
+      },
+      errorClass: 'error_validate',
+      errorElement:'span',
+      highlight: function(element, errorClass) {
+      $(element).removeClass(errorClass);
+      },
+      submitHandler:function(form)
+         {   
+            $('#sub_btn1').attr('disabled',true);
+            form.submit();       
+         }
+      });
+</script>
+
+<script type="text/javascript">
+  $('#cancel_btn').click(function(){
+    location.reload();
+  })
+</script>
+<script type="text/javascript">
+function isNumdeciKey(evt)
+{
+var charCode = (evt.which) ? evt.which : evt.keyCode;
+if (charCode != 46 && charCode > 31 
+&& (charCode < 48 || charCode > 57))
+return false;
+return true;
+}
+
+ function isNumberKey(evt)
+    {
+                 var charCode = (evt.which) ? evt.which : evt.keyCode
+
+                // alert(charCode);
+                 if (charCode > 31 && (charCode < 48 || charCode > 57))
+                    return false;
+                 return true;
+    }
+</script>
+<script type="text/javascript">
+$(document).ready(function () {
+var flash_msg=$('.flash_msg').html();
+if(flash_msg!="" && flash_msg!=undefined)
+{
+  setTimeout(function(){ $('.flash_msg').html('');},5000);
+}    
+});
+</script>

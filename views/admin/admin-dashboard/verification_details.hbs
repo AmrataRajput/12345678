@@ -1,0 +1,200 @@
+{{> admin_inner_header}}
+{{> admin_inner_sidebar}}
+<div class="content-wrapper right-side">
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                   <section class="content-header">
+                    <h3>Verification user list</h3>
+                    <ol class="breadcrumb">
+                        {{!-- <li><a href=""><i class="fa fa-dashboard"></i>Home</a></li> --}}
+                        <li><a href="javascript:void(0);">Dashboard</a></li>
+                        <li><a href="javascript:void(0);" class="active">Verification List</a></li>
+                    </ol>
+          </section>
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+
+                  {{#if expressFlash.update_status_fail}}
+                    <div class="alert alert-danger">{{expressFlash.update_status_fail}}</div>
+                  {{/if}}
+
+                  {{#if expressFlash.update_status_success}}
+                    <div class="alert alert-success">{{expressFlash.update_status_success}}
+                    </div>
+                  {{/if}}
+
+                  <div class="table-responsive">
+                    <table class="table table-striped" id="verification_table">
+                      <thead>
+                        <tr>
+                          <th>
+                            S.No.
+                          </th>
+                          <th>
+                            Name
+                          </th>
+                          <th>
+                            Email
+                          </th>
+                          <th>
+                            Document
+                          </th>
+                          <th>
+                            Status
+                          </th>
+                          <th>
+                            Wallet Address
+                          </th>
+                          <th>
+                            Created At
+                          </th>
+                          <th>
+                            Updated At
+                          </th>
+                          <th>
+                            Action
+                          </th>
+
+                        </tr>
+                      </thead>
+                         <tbody>
+                      {{#if veri_details}}
+                      {{#each veri_details}}
+
+                      <tr>
+                        <td>{{increment_variable @index}}</td>
+                        <td> {{#if user_id.name}}{{escape user_id.name}}{{/if}}</td>
+                        <td>{{user_id.email}}</td>
+                        <td><a href="http://env-2115519.cloudjiffy.net/assets/images/{{escape image}}" target="_blank">View Document</a></td>
+                        <td>{{this.id_verify_status}}</td>
+                        <td>{{user_id.address}}</td>
+                        <td>{{dateFormat this.created_at "YYYY-MM-DD hh:mm:ss" }}</td>
+                        {{#if updated_at}}
+                        <td>{{dateFormat this.updated_at "YYYY-MM-DD hh:mm:ss"}}</td>
+                        {{else}}
+                        <td>{{N/A}}</td>
+                        {{/if}}
+                        <td><div class="form-group">
+
+                      <select class="form-control form-control-lg" id="" onchange="change_status_doc(this,'{{this._id}}')" {{check_my_disabled this.id_verify_status}}>
+                     {{#select this.id_verify_status}}
+                      <option value="Pending">Pending</option>
+                      <option value="Rejected">Rejected</option>
+                      <option  value="Verified">Verified</option>
+                      {{/select}}
+                    </select>
+                  </div></td>
+                    </tr>
+                      {{/each}}
+                      {{/if}}
+                    </tbody>
+                    </table>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+          <!-- Modal -->
+<div class="modal fade" id="reson_modal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Reason For Rejection</h4>
+        </div>
+        <form id="edit_user_form" method="post" action="/update-kyc-status-rejection">
+        <div class="modal-body">
+        <div class="col-md-12">
+         <textarea name="reject_reason" class="form-control" placeholder="Reason of Rejection" data-rule-required="true" data-msg-required="Please Enter Reason." style="height: 100px;" id="reject_reason"> </textarea>
+         <input type="hidden" id="doc_fin_status" name="doc_fin_status" value="">
+         
+         <input type="hidden" id="doc_fin_status_id" name="doc_fin_status_id" value="">
+       
+       </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success mr-2">Update</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
+      </div>
+      
+    </div>
+  </div>
+
+  {{> admin_inner_footer}}
+  <script type="text/javascript">
+
+               $(document).ready(function (){
+               $('#edit_user_form').validate({
+                     onfocusout: function(element) {
+                           this.element(element);
+                     },
+                     errorClass: 'error_validate',
+                     errorElement:'span',
+                     highlight: function(element, errorClass) {
+                      $(element).removeClass(errorClass);
+                     }
+                   });
+
+               });
+</script>
+<script type="text/javascript">
+            
+        $(document).ready(function () {
+
+         $('#verification_table').DataTable({
+           
+        });
+        $('#verification_table_filter input').addClass('form-control');
+        $('#verification_table_filter label').addClass('card-title');
+        $('#verification_table_length label').addClass('card-title');
+        $('#verification_table_paginate a').addClass('card-title');
+        $('#verification_table_info').addClass('card-title');
+
+    });
+
+    /*****Change Document Status***/
+
+    function change_status_doc(sel,prime_id){
+
+      var send_value = sel.value;
+
+      if(send_value=='Rejected'){
+
+        $('#reson_modal').modal('show');
+
+        $('#doc_fin_status').val(send_value);
+
+        $('#doc_fin_status_id').val(prime_id);
+
+        $('#reject_reason').val('');
+
+
+      } else {
+
+
+         if(confirm('Really Do you want to change status ?')){
+
+           window.location.replace("/update-kyc-status/?value="+send_value+"&prime_id="+prime_id);
+          
+          } else {
+
+
+          }
+      
+      }
+
+
+     
+
+    }
+
+</script>

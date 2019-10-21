@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+     <title>Rowan Energy</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/assets/images/favicon.png">
+  <!-- Bootstrap Core CSS -->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/assets/css/bootstrap-dropdownhover.min.css" rel="stylesheet"/>
+  <!-- Animate CSS -->
+    <link href="/assets/css/animate.css" rel="stylesheet"/>
+    <!-- hover-min CSS -->
+    <link href="/assets/css/hover-min.css" rel="stylesheet"/>
+    <!-- yamm css -->
+    <link href="/assets/css/yamm.css" rel="stylesheet"/>
+    <!-- Font-awesome web fonts with css -->
+    <link href="/assets/css/fontawesome-all.css" rel="stylesheet" type="text/css"/>
+    <!-- Font-awesome web fonts with css -->
+    <!-- loader css -->
+    <link href="/assets/css/loader.css" rel="stylesheet"/>
+  <!-- Custom CSS -->
+    <link href="/assets/css/custom.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Oxygen:300,400,700" rel="stylesheet">
+     <link rel="stylesheet" href="/assets/css/jquery-ui.css">
+</head>
+<body>
+<div id="warpper" class="side-menu">
+<!-- Header html -->
+<!-- Header html end -->
+<div id="mySidenav" class="sidenav">
+   <ul>
+      <li><a href="/Dashboard" id="dashboard">
+              <img src="/assets/images/icons/img_wallet.png" class="white-img" alt="Wallet">
+              <img src="/assets/images/icons/createWallet_black.png" class="black-icon" alt="Wallet">
+             Dashboard
+           </a>
+         </li>
+      <div id="create-and-import" style="display: none;">
+       <li><a href="/Set-you-wallet" id="cr-wallet">
+              <img src="/assets/images/icons/img_wallet.png" class="white-img" alt="Wallet">
+              <img src="/assets/images/icons/createWallet_black.png" class="black-icon" alt="Wallet">
+             Create wallet
+           </a>
+         </li>
+       <li>
+        <a href="/Import-wallet" id="im-wallet">
+         <img src="/assets/images/icons/importWallet_white.png" class="white-img" alt="Wallet">
+         <img src="/assets/images/icons/importWallet_black.png" class="black-icon" alt="Wallet">
+          Import wallet
+        </a>
+      </li>
+      </div>
+
+       <li>
+        <a href="/Transaction-history" id="tran-hist">
+          <img src="/assets/images/icons/transactionHistory_white.png" class="white-img" alt="Wallet">
+          <img src="/assets/images/icons/transactionHistory_black.png" class="black-icon" alt="Wallet">
+           Transaction history
+         </a>
+       </li>
+       <li>
+        <a href="/Profile" id="pro-menu">
+            <img src="/assets/images/icons/myProfile_white.png" class="white-img" alt="Wallet">
+            <img src="/assets/images/icons/myProfile_black.png" class="black-icon" alt="Wallet">
+          My profile
+        </a>
+      </li>
+       <li>
+        <a href="/Logout">
+          <img src="/assets/images/icons/logout_white.png" class="white-img" alt="Wallet">
+          <img src="/assets/images/icons/logout_black.png" class="black-icon" alt="Wallet"> 
+        Logout</a>
+      </li>
+       <li>
+        <a href="/exchange" target="_blank">
+         <img src="/assets/images/icons/img_wallet.png" class="white-img" alt="Wallet">
+              <img src="/assets/images/icons/createWallet_black.png" class="black-icon" alt="Wallet">
+        Exchange</a>
+      </li>
+       <li>
+        <a href="/rowanvault" target="_blank">
+         <img src="/assets/images/icons/img_wallet.png" class="white-img" alt="Wallet">
+        <img src="/assets/images/icons/createWallet_black.png" class="black-icon" alt="Wallet">
+        Rowan Vault</a>
+      </li>
+   </ul>
+</div>
+
+
+<div id="main">
+  <header class="header-main dashboard-header" id="dash-head">
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="/Dashboard"><img src="/assets/images/logo.png" align="horse chain logo"></a>
+             <span id="menuToggle" style="font-size:20px;cursor:pointer" >&#9776;</span>
+               <ul class="navbar-nav ml-auto">
+                   <!--  <li class="nav-item dropdown notification-icon">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="/assets/images/other/notify.png" alt="notify">
+                        <span class="badge">9</span>
+                        </a>
+                       <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
+                  <li class="dropdown-menu-header">
+                    <h6 class="dropdown-header m-0"><span class="grey darken-2">Notifications</span><span class="notification-tag badge badge-default badge-danger float-right m-0">5 New</span></h6>
+                  </li>
+                    <li class="scrollable-container media-list w-100 ps-container ps-theme-dark">
+                      <a href="javascript:void(0)">
+                        <div class="media">
+                          <div class="media-left align-self-center">
+                            <i class="ft-plus-square icon-bg-circle bg-cyan"></i>
+                          </div>
+                          <div class="media-body">
+                            <h6 class="media-heading">You have new order!</h6>
+                            <p class="notification-text">Lorem ipsum dolor sit amet, consectetuer elit.</p><small>
+                              <time class="media-meta text-muted">30 minutes ago</time></small>
+                          </div>
+                        </div>
+                       </a>
+                      </li>
+                     <li class="dropdown-menu-footer"><a class="dropdown-item read-mor-link text-muted text-center" href="all-notification.php">Read all notifications</a></li>
+                </ul>
+                    </li> -->
+                     <li class="nav-item dropdown user-dropdown">
+                       <% var user_data=greet(); %>
+                       <% if(user_data !="") { %>
+                         <input type="hidden" name="user_id" value="<%-user_data._id%>" id="user_id">
+                       <% } %>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                         <% if(user_data.profile_image != "")
+                          { %> 
+                        <img src="/upload_user_profile/<%=user_data.profile_image%>" align="user">
+                        <% } else { %>
+                        <img src="/assets/images/other/9.png" align="user">
+                        <% } %>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/Profile"><img src="/assets/images/other/9.png">My Profile</a>
+                            <a class="dropdown-item" href="/Change-password"><img src="/assets/images/other/9.png">Change Password</a>
+                            <a class="dropdown-item" href="/Dashboard"><img src="/assets/images/other/10.png">Dashboard</a>
+                            <a class="dropdown-item" href="/Transaction-history"><img src="/assets/images/other/10.png"> My transaction</a>
+                            <a class="dropdown-item" href="/Logout"><img src="/assets/images/other/12.png"> Logout</a>
+                        </div>
+                    </li>
+                   
+                </ul>
+        </nav>
+    </div>
+</header>
+ <style>
+       .error_validate {color: red;}
+       .title{padding: 0 50px 20px;}
+</style>

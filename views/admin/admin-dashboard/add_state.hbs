@@ -1,0 +1,71 @@
+{{> admin_inner_header}}
+{{> admin_inner_sidebar}}
+<div class="content-wrapper right-side">
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                   <section class="content-header">
+                    <h3> Add State </h3>
+                    <ol class="breadcrumb">
+                        <li><a href="">Dashboard</a></li>
+                        <li><a href="javascript:void(0);" class="active">Add State</a></li>
+                    </ol>
+          </section>
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+
+                  {{#if expressFlash.fail}}
+                    <div class="alert alert-danger">{{expressFlash.fail}}</div>
+                  {{/if}}
+
+                  <form class="forms-sample" id="edit_user_form" action='/add-submit-state' method='post'>
+                    <div class="form-group">
+                      <label for="exampleInputName1">State Name</label>
+                      <input type="text" name="state_name" class="form-control" id="exampleInputName1" placeholder="State Name" data-rule-required="true" data-msg-required="Please Enter State Name." value="">
+                    </div>
+
+
+                    <div class="form-group">
+                    <label for="exampleFormControlSelect2">Country Name</label>
+                    <select class="form-control" id="" name="country_name" data-rule-required="true" data-msg-required="Please Select Country Name.">
+                    <option value="">Select Country</option>
+                    {{#each countryDetails}}
+                      <option value="{{this._id}}">{{this.country_name}}</option>
+                    {{/each}}
+                    </select>
+                  </div>
+
+                    <div class="form-group">
+                    <label for="exampleFormControlSelect2">Status</label>
+                    <select class="form-control" id="" name="state_status" data-rule-required="true" data-msg-required="Please Select Status.">
+                      <option value="">Select Status</option>
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                    </select>
+                  </div>
+                    <button type="submit" class="btn btn-success mr-2">Submit</button>
+                    <a href="/state-list" class="btn btn-light">Cancel</a>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  {{> admin_inner_footer}}
+  <script type="text/javascript">
+
+               $(document).ready(function (){
+               $('#edit_user_form').validate({
+                     onfocusout: function(element) {
+                           this.element(element);
+                     },
+                     errorClass: 'error_validate',
+                     errorElement:'span',
+                     highlight: function(element, errorClass) {
+                      $(element).removeClass(errorClass);
+                     }
+                   });
+
+               });
+</script>

@@ -1,0 +1,103 @@
+{{> admin_inner_header}}
+{{> admin_inner_sidebar}}
+<div class="content-wrapper right-side">
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                   <section class="content-header">
+                    <h3> Add News </h3>
+                    <ol class="breadcrumb">
+                        {{!-- <li><a href=""><i class="fa fa-dashboard"></i> Home</a></li> --}}
+                        <li><a href="javascript:void(0);">News List</a></li>
+                        <li><a href="javascript:void(0);" class="active">Add News</a></li>
+                    </ol>
+          </section>
+            <div class="col-md-10 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+
+                  {{#if expressFlash.fail}}
+                    <div class="alert alert-danger">{{expressFlash.fail}}</div>
+                  {{/if}}
+
+                  <form class="forms-sample" id="edit_user_form" action='/submit-news-details' method='post' enctype="multipart/form-data">
+                    <div class="form-group">
+                      <label for="exampleInputName1">News Heading <span style="color: red">*</span></label>
+                      <input type="text" name="news_heading" class="form-control" id="exampleInputName1" placeholder="Member Name" data-rule-required="true" data-msg-required="Please Enter News Heading." value="">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="exampleInputName1">News Description <span style="color: red">*</span></label>
+                    <textarea name="news_desc" data-rule-required="true" data-msg-required="Please Enter News Description." id="news_desc" class="form-control" rows="5"></textarea>
+                   </div>
+                   <span class="desc_error" style="font-size:13px;color:red;"></span>
+
+
+                    <div class="form-group">
+                      <label>Image <span style="color: red">*</span></label>
+                      <input type="file" class="file-upload-default">
+                      <div class="input-group col-xs-12">
+                        <input name="user_profile"  type="file" class="form-control file-upload-info" placeholder="Upload Image" data-rule-required="true" id="user_profile" data-msg-required="Please Upload Profile Picture." >
+                        <span class="input-group-append"></span>
+                      </div>
+                      <span class="error_validate" for="user_profile"></span>
+
+                    </div>
+
+                    <div class="form-group">
+                    <label for="exampleFormControlSelect2">Status <span style="color: red">*</span></label>
+                    <select class="form-control" id="" name="news_status" data-rule-required="true" data-msg-required="Please Select Status.">
+                      <option value="">Select Status</option>
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                    </select>
+                  </div>
+                    <button type="submit" class="btn btn-success mr-2" onclick="check_record(event);">Submit</button>
+                    <a href="/news-list" class="btn btn-light">Cancel</a>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  {{> admin_inner_footer}}
+  <script type="text/javascript">
+
+               $(document).ready(function (){
+               $('#edit_user_form').validate({
+                     onfocusout: function(element) {
+                           this.element(element);
+                     },
+                     errorClass: 'error_validate',
+                     errorElement:'span',
+                     highlight: function(element, errorClass) {
+                      $(element).removeClass(errorClass);
+                     }
+                   });
+
+               });
+      
+      function check_record(event){
+
+        var get = CKEDITOR.instances.news_desc.getData();
+
+        if(get == ""){
+
+          $(".desc_error").text('Please Enter Description.');
+
+           event.preventDefault();
+
+           return false;
+
+        } else {
+
+          $(".desc_error").text('');
+
+           return true;
+
+        }
+
+      }
+
+      /* CKEDITOR.replace( 'news_desc' );*/
+</script>

@@ -1,0 +1,67 @@
+{{> admin_inner_header}}
+{{> admin_inner_sidebar}}
+<div class="content-wrapper right-side">
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                   <section class="content-header">
+                    <h3> Edit Country </h3>
+                    <ol class="breadcrumb">
+                        <li><a href="">Dashboard</a></li>
+                        <li><a href="javascript:void(0);" class="active">Edit Country</a></li>
+                    </ol>
+          </section>
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+
+                  {{#if expressFlash.fail}}
+                    <div class="alert alert-danger">{{expressFlash.fail}}</div>
+                  {{/if}}
+
+                  <form class="forms-sample" id="edit_user_form" action='/update-submit-country' method='post'>
+                    <div class="form-group">
+                      <label for="exampleInputName1">Country Name</label>
+                      <input type="text" name="country_name" class="form-control" id="exampleInputName1" placeholder="Country Name" data-rule-required="true" data-msg-required="Please Enter Country Name." value="{{countryDetails.country_name}}">
+                    </div>
+
+                    <div class="form-group">
+                    <label for="exampleFormControlSelect2">Status</label>
+                    <select class="form-control" id="" name="contry_status" data-rule-required="true" data-msg-required="Please Select Status.">
+                       {{#select countryDetails.status}}
+                      <option value="">Select Status</option>
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                       {{/select}}
+                    </select>
+                  </div>
+
+                  <input type='hidden' name='user_m_id' value={{countryDetails._id}}>
+                 
+                   <input type="hidden" name="pre_country_name" class="form-control" id="exampleInputName1" placeholder="Country Name" data-rule-required="true" data-msg-required="Please Enter Country Name." value="{{countryDetails.country_name}}">
+
+                    <button type="submit" class="btn btn-success mr-2">Update</button>
+                    <a href="/country-list" class="btn btn-light">Cancel</a>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  {{> admin_inner_footer}}
+  <script type="text/javascript">
+
+               $(document).ready(function (){
+               $('#edit_user_form').validate({
+                     onfocusout: function(element) {
+                           this.element(element);
+                     },
+                     errorClass: 'error_validate',
+                     errorElement:'span',
+                     highlight: function(element, errorClass) {
+                      $(element).removeClass(errorClass);
+                     }
+                   });
+
+               });
+</script>

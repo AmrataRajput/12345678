@@ -1,0 +1,148 @@
+{{> admin_inner_header}}
+{{> admin_inner_sidebar}}
+<style>
+.for-discri{  
+  width: 300px !important;
+    display: block !important;
+    white-space: normal !important;
+    line-height: 20px !important;
+  }
+</style>
+  <div class="content-wrapper right-side">
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                   <section class="content-header">
+                    <h3> Members List </h3>
+                    <ol class="breadcrumb">
+                        {{!-- <li><a href=""><i class="fa fa-dashboard"></i> Home</a></li> --}}
+                        <li><a href="javascript:void(0);">Dashboard</a></li>
+                        <li><a href="javascript:void(0);" class="active">Members List</a></li>
+                    </ol>
+          </section>
+                <div class="card-body">
+                  <div class="col-md-12" style="text-align: right;margin-bottom: 25px;">
+                  <a style="color:#fff;" href="/add-team-member" class="btn btn-primary btn-rounded btn-fw">Add Member</a>
+                </div>
+                    <div style="clear:both"></div>
+
+                  {{#if expressFlash.edit_fail}}
+                    <div class="alert alert-danger">{{expressFlash.edit_fail}}</div>
+                  {{/if}}
+
+                  {{#if expressFlash.edit_success}}
+                    <div class="alert alert-success">{{expressFlash.edit_success}}</div>
+                  {{/if}}
+                  <div class="table-responsive">
+                    <table class="table table-striped" id="user_table" style="width: 100%">
+                      <thead>
+                        <tr>
+                          <th>
+                            S.No
+                          </th>
+                          <th>
+                            Image
+                          </th>
+                          <th>
+                            Name
+                          </th>
+                          <th>
+                            Designation
+                          </th>
+                          
+                        <th>
+                            Description
+                          </th>
+                          {{!-- <th>
+                           Facebook URL
+                          </th>
+                          <th>
+                             Linkedin URL
+                          </th>
+                          <th>
+                            Twitter URL
+                          </th>--}}
+                          <th>
+                            Created At
+                          </th>
+                          <th>
+                            Updated At
+                          </th>
+                          <th>
+                            Action
+                          </th>
+
+                        </tr>
+                      </thead>
+                         <tbody>
+                      {{#if memberDetails}}
+                      {{#each memberDetails}}
+                      <tr>
+                        <td>{{increment_variable @index}}</td>
+                   {{#if this.member_image}}
+                  <td><img src="/uploads/team-member-profiles/{{this.member_image}}" style=" width: 50px;height: 50px;"></td>
+                  {{else}}
+                   <td><img src="/images/faces-clipart/pic-1.png" style="width: 50px;height: 50px;"></td>
+                   {{/if}}
+                        <!-- <td><img src="{{check_image_exist this.member_image 2}}"></td> -->
+                        <td>{{member_name}}</td>
+                        <td>{{this.member_sub_title}}</td>
+                        <td class="for-discri">{{this.member_description}}</td>
+                        <!-- <td>{{this.member_facebook}}</td>
+                        <td>{{this.member_twitter}}</td>
+                        <td>{{this.member_linkedin}}</td> -->
+                        <td>{{dateFormat created_at "YYYY-MM-DD hh:mm:ss"}}</td>
+                        {{#if updated_at}}
+                        <td>{{dateFormat updated_at "YYYY-MM-DD hh:mm:ss"}}</td>
+                        {{else}}
+                        <td>{{N/A}}</td>
+                        {{/if}}
+                        <td>
+                          <ul class="edit-list icons-list icon-width">
+                            <li><a title="Edit" href="/edit-team-member/{{this._id}}"><i class="fa fa-pencil-square-o"></i></a>
+                            </li>
+                            <li><a title="Delete" onclick="return confirm_deletion();" href="/delete-member/{{this._id}}"><i class="fa fa-remove"></i></a>
+                            </li>
+                           </a></ul>
+                        </td>
+                    </tr>
+                      {{/each}}
+                      {{/if}}
+                    </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{> admin_inner_footer}}
+
+    <script type="text/javascript">
+            
+        $(document).ready(function () {
+
+        $('#user_table').DataTable({
+           
+        });
+        $('#user_table_filter input').addClass('form-control');
+        $('#user_table_filter label').addClass('card-title');
+        $('#user_table_length label').addClass('card-title');
+        $('#user_table_paginate a').addClass('card-title');
+        $('#user_table_info').addClass('card-title');
+
+    });
+
+     function confirm_deletion(){
+
+        if(confirm('Really you want to delete member?')){
+
+          return true;
+
+        }else{
+
+          return false;
+        }
+     }
+
+</script>

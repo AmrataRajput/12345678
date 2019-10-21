@@ -1,0 +1,80 @@
+{{> admin_inner_header}}
+{{> admin_inner_sidebar}}
+<div class="content-wrapper right-side">
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                   <section class="content-header">
+                    <h3> Edit user </h3>
+                    <ol class="breadcrumb">
+                        <li><a href=""><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li><a href="javascript:void(0);">User List</a></li>
+                        <li><a href="javascript:void(0);" class="active">Edit User</a></li>
+                    </ol>
+          </section>
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <form class="forms-sample" id="edit_user_form" action='/update-profile' method='post' enctype="multipart/form-data">
+                    <div class="form-group">
+                      <label for="exampleInputName1">Name</label>
+                      <input type="text" name="user_name" class="form-control" id="exampleInputName1" placeholder="Name" data-rule-required="true" data-msg-required="Please Enter Name." value={{escape details.name}}>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail3">Email address</label>
+                      <input type="email" name="user_email" class="form-control" id="" placeholder="Email" data-rule-required="true" data-rule-email="true" data-msg-required="Please Enter valid Email." value={{details.email}}>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail3">Mobile Number</label>
+                      <input type="text" name="mobile_number" class="form-control" id="" placeholder="Mobile No." data-rule-required="true" data-msg-required="10 digit mobile number is mandatory." onkeypress="return isNumberKey(event);" data-rule-minlength="10" data-msg-minlength="Please Enter Minimum 10 Digits." data-rule-maxlength="10" data-msg-maxlength="You Can't Enter More Than 10 Digits." value={{details.mobile_no}}>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail3">Wallet Address</label>
+                      <input type="text" name="wallet_adddress" class="form-control" id="" placeholder="Email" data-rule-required="true" data-msg-required="Please Enter wallet address." value={{details.address}}>
+                    </div>
+                    <div class="form-group">
+                      <label>File upload</label>
+                      <input type="file" class="file-upload-default">
+                      <div class="input-group col-xs-12">
+                        <input name="user_profile"  type="file" class="form-control file-upload-info" placeholder="Upload Image">
+                        <span class="input-group-append">
+{{!--                           <button class="file-upload-browse btn btn-info" type="button">Upload</button>
+ --}}                        </span>
+                      </div>
+                    </div>
+                      <img src="/uploads/user_profile_images/{{details.profile_image}}">
+                    <input type='hidden' name='user_m_id' value={{details._id}}>
+                    <input type='hidden' name='user_pre_image' value={{details.profile_image}}>
+                {{!--     <div class="form-group">
+                      <label for="exampleInputCity1">City</label>
+                      <input type="text" class="form-control" id="exampleInputCity1" placeholder="Location">
+                    </div> --}}
+                    <div class="form-group">
+                      <label for="exampleTextarea1">Address</label>
+                      <textarea class="form-control" data-rule-required="true" data-msg-required="Please Enter Address." name="user_home_address" id="exampleTextarea1" rows="2">{{details.user_address}}</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success mr-2">Submit</button>
+                    <a href="/registered-users" class="btn btn-light">Cancel</a>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  {{> admin_inner_footer}}
+  <script type="text/javascript">
+
+               $(document).ready(function (){
+               $('#edit_user_form').validate({
+                     onfocusout: function(element) {
+                           this.element(element);
+                     },
+                     errorClass: 'error_validate',
+                     errorElement:'span',
+                     highlight: function(element, errorClass) {
+                      $(element).removeClass(errorClass);
+                     }
+                   });
+
+               });
+</script>

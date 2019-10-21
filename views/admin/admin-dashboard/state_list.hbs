@@ -1,0 +1,115 @@
+{{> admin_inner_header}}
+{{> admin_inner_sidebar}}
+  <div class="content-wrapper right-side">
+ 
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+
+             
+              <div class="card">
+                   <section class="content-header">
+                    <h3> State List </h3>
+                    <ol class="breadcrumb">
+{{!--                         <li><a href=""><i class="fa fa-dashboard"></i> Home</a></li>
+ --}}                        <li><a href="javascript:void(0);">Dashboard</a></li>
+                        <li><a href="javascript:void(0);" class="active">State List</a></li>
+                    </ol>
+          </section>
+                <div class="card-body">
+                  <div class="col-md-12" style="text-align: right;margin-bottom: 25px;">
+                  <a style="color:#fff;" href="/add-state" class="btn btn-primary btn-rounded btn-fw">Add State</a>
+                </div>
+                  {{#if expressFlash.edit_fail}}
+                    <div class="alert alert-danger">{{expressFlash.edit_fail}}</div>
+                  {{/if}}
+
+                  {{#if expressFlash.edit_success}}
+                    <div class="alert alert-success">{{expressFlash.edit_success}}</div>
+                  {{/if}}
+                  <div class="table-responsive">
+                    <table class="table table-striped" id="user_table" cellspacing="0" width="100%">
+                      <thead>
+                        <tr>
+                          <th>
+                            S.No.
+                          </th>
+                          <th>
+                            State Name
+                          </th> 
+                          <th>
+                            Country Name
+                          </th>
+                          <th>
+                            Created At
+                          </th>
+                          <th>
+                            Updated At
+                          </th>
+                          <th>
+                            Action
+                          </th>
+                        </tr>
+                      </thead>
+                         <tbody>
+                      {{#if stateDetails}}
+                      {{#each stateDetails}}
+                      <tr>
+                        <td>{{increment_variable @index}}</td>
+                        <td>{{this.state_name}}</td>
+                        <td>{{this.country_id.country_name}}</td>
+                        <td>{{dateFormat created_at "YYYY-MM-DD hh:mm:ss"}}</td>
+                        {{#if updated_at}}
+                        <td>{{dateFormat updated_at "YYYY-MM-DD hh:mm:ss"}}</td>
+                        {{else}}
+                        <td>{{N/A}}</td>
+                        {{/if}}
+                        <td>
+                          <ul class="edit-list icons-list icon-width">
+                            <li><a title="Edit" href="/edit-state/{{this._id}}"><i class="fa fa-pencil-square-o"></i></a>
+                            </li>
+                            <li><a title="Delete" onclick="return confirm_deletion();" href="/delete-state-details/{{this._id}}"><i class="fa fa-remove"></i></a>
+                            </li>
+                           </a></ul>
+                        </td>
+                    </tr>
+                      {{/each}}
+                      {{/if}}
+                    </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{> admin_inner_footer}}
+
+    <script type="text/javascript">
+            
+        $(document).ready(function () {
+
+        $('#user_table').DataTable({
+
+           
+        });
+        $('#user_table_filter input').addClass('form-control');
+        $('#user_table_filter label').addClass('card-title');
+        $('#user_table_length label').addClass('card-title');
+        $('#user_table_paginate a').addClass('card-title');
+        $('#user_table_info').addClass('card-title');
+
+    });
+
+     function confirm_deletion(){
+
+        if(confirm('Really you want to delete country?')){
+
+          return true;
+
+        }else{
+
+          return false;
+        }
+     }
+
+</script>

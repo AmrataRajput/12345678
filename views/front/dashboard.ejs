@@ -1,0 +1,496 @@
+<%- include('../templates/header') %>
+
+<section class="dash-inner-sec">
+    <div class="container-fluid">
+        <div class="row">
+             <div class="col-lg-5 col-md-12">
+                 <div class=" ">
+                   <div class="dashboard-box resent-box shadow-box">
+                     <div class="create-wallet-block">
+                           <h4 class="green-heading">Rowan Energy</h4>
+                           <div class="resent-bottom-logo">
+                            <img src="assets/images/other/2.png" alt="logo">
+                           </div>
+                           <p class="head-commn-text"> <% if(wallet_details !="" && wallet_details!= null) { %>
+                           <%- typeof wallet_details.wallet_address !== 'undefined' ? wallet_details.wallet_address : '' %></p>
+                           <h5><%-balance.toFixed(2)%> ETH /<%-rown_bal%> RWN</h5>
+                            <div class="text-center mlti-btn">
+                              <% if(wallet_details._id !="" && wallet_details._id !=null) { 
+                              
+                             var wallet=(wallet_details._id).toString();
+                             var mykey = crypto.createHash('sha256').update(wallet).digest('base64');
+                            %>
+
+                            <% if( rown_bal !=0 &&  rown_bal !=null && rown_bal !="" ) { %>
+                             <a href="/Send-rowan/<%-wallet_details._id %>" class="btn btn-common light-green">Send</a>
+                            
+                            <% } else { %>
+                               <a href="javascript:void(0);" onclick="return (alert('You did not have Balance to send RWN.'))" class="btn btn-common light-green">Send</a>
+                             
+                              <% } %>
+
+                              <% } %>
+                               <a href="/Receive-rowan/<%-wallet_details._id %>" class="btn btn-common light-green">Receive</a>
+                          </div>
+
+                            <div class="text-center">
+                              <button class="btn btn-common light-green logout-btn" onclick="wallet_logout(' <%- typeof import_wallet_id !== 'undefined' ? import_wallet_id : '' %>')">Logout</button>
+                          </div>
+                        <% } else { %>
+                           <p class="head-commn-text">No wallet presents.</p>
+                            <a href="/Set-you-wallet" class="btn btn-common light-green">Create</a>
+                             
+                               <a href="/Import-wallet" class="btn btn-common light-green">Import</a>
+                          <% }%>
+                           
+                          
+                        </div>
+                 </div>
+                  <div class="upper-block-coin ">
+                    <div class="header-block clearfix">
+                      <span class="name-side green-heading">Rowan Energy</span>
+                      <span class="logo-side"><img src="assets/images/other/2.png"></span>
+                    </div>
+                    <div class="next-block">
+                      <span class="left-side">RWN - 0.0000000</span>
+                      <span class="equal">≅</span>
+                      <span class="right-side">
+                         <select name="food_selector" data-placeholder="USD - 0.0000000">
+            								<option value="pancakes"><img src="assets/images/other/4.png">USD - 0.0000000</option>
+            								<option value="pancakes"><img src="assets/images/other/4.png">USD - 0.0000000</option>
+            								<option value="pancakes"><img src="assets/images/other/4.png">USD - 0.0000000</option>
+            								<option value="pancakes"><img src="assets/images/other/4.png">FKP</option>
+            							</select>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="shadow-box  small-line-graph ">
+                      <h5>48.00B</h5>
+                      <p class="head-commn-text">Energy Sold(kwh)</p>
+                      <div id="chart_div_line" class="line-chart"></div>    
+                  </div>
+                 </div>
+             </div>
+             <div class="col-lg-7 col-md-12">
+                <div class="shadow-box graph-box ">
+                   <div id="chart_div" class="chart-graph"></div>
+                </div>
+
+                <div class="shadow-box graph-box ">
+                    <h3 class="main-heading">Rowan Rewards Earned</h3>
+                     <div id="chart_div_area" ></div>
+                </div>
+             </div>
+        </div>
+          <div class="">
+            <div class="row">
+            <div class="col-md-6">
+            <div class="shadow-box  small-line-graph ">
+                <h5>48.00B</h5>
+                <p class="head-commn-text">Energy Sold(kwh)</p>
+                <div id="chart_div_line2" class="line-chart"></div>    
+            </div>
+          </div>
+           <div class="col-md-6">
+            <div class="shadow-box  small-line-graph ">
+                <h5>48.00B</h5>
+                <p class="head-commn-text">Energy Sold(kwh)</p>
+                <div id="chart_div_line3" class="line-chart"></div>    
+            </div>
+          </div>
+          </div>
+          </div>
+        </div>
+    </div>
+</section>
+
+
+<%- include('../templates/footer') %>
+
+<script>
+  
+$(document).ready(function() {
+    var win = $(this);
+    if (win.width() < 768) { 
+        $('#warpper').removeClass('side-menu');
+    }
+    else{
+        $('#warpper').addClass('side-menu');   
+    } 
+    setTimeout(function() { $('.alert').fadeOut('fast');}, 30000); // 
+});         
+</script>
+
+
+
+<script>
+  /*
+Reference: http://jsfiddle.net/BB3JK/47/
+*/
+
+$('select').each(function(){
+    var $this = $(this), numberOfOptions = $(this).children('option').length;
+  
+    $this.addClass('select-hidden'); 
+    $this.wrap('<div class="select"></div>');
+    $this.after('<div class="select-styled"></div>');
+
+    var $styledSelect = $this.next('div.select-styled');
+    $styledSelect.text($this.children('option').eq(0).text());
+  
+    var $list = $('<ul />', {
+        'class': 'select-options'
+    }).insertAfter($styledSelect);
+  
+    for (var i = 0; i < numberOfOptions; i++) {
+        $('<li />', {
+            text: $this.children('option').eq(i).text(),
+            rel: $this.children('option').eq(i).val()
+        }).appendTo($list);
+    }
+  
+    var $listItems = $list.children('li');
+  
+    $styledSelect.click(function(e) {
+        e.stopPropagation();
+        $('div.select-styled.active').not(this).each(function(){
+            $(this).removeClass('active').next('ul.select-options').hide();
+        });
+        $(this).toggleClass('active').next('ul.select-options').toggle();
+    });
+  
+    $listItems.click(function(e) {
+        e.stopPropagation();
+        $styledSelect.text($(this).text()).removeClass('active');
+        $this.val($(this).attr('rel'));
+        $list.hide();
+        //console.log($this.val());
+    });
+  
+    $(document).click(function() {
+        $styledSelect.removeClass('active');
+        $list.hide();
+    });
+
+});
+</script>
+
+ <script type="text/javascript" src="https://kkog.io/public/assets/js/loader.js"></script>
+<script>
+google.charts.load('current', {packages: ['corechart', 'bar']});
+google.charts.setOnLoadCallback(drawStacked);
+
+function drawStacked() {
+      
+
+      var data = google.visualization.arrayToDataTable([
+        ['Month and Year', 'CASHOUT', 'REINVEST', { role: 'annotation' }],
+        ['january 2018', 70, 30, '1'],
+        ['january 2018', 60, 25,  '2'],
+        ['january 2018', 80, 30,  '3'],
+        ['january 2018', 50, 20,  '7']
+      ]);
+      
+ 
+      var options = {
+       isStacked: true,
+        legendTextStyle: { 
+          color: '#000',
+        },
+        hAxis: {
+          format: 'year',
+          textStyle:{color: '#000'},
+          viewWindow: {
+            min: [7, 30, 0],
+            max: [17, 30, 0]
+          },
+          gridlines: {
+                color: 'transparent'
+            }
+        },
+        vAxis: {
+          title: '(ROWAN Energy)',
+          textStyle:{color: '#fff'},
+          baselineColor: '#000',
+          gridlines: {
+                color: 'transparent'
+            }
+
+        },
+        
+
+
+
+        colors: ['#6FBC20','#5D89A8'],
+        backgroundColor: 'transparent',
+        legend: 'bottom',
+
+       pointsVisible: true,
+        bar: {groupWidth: "40%"},
+
+       
+
+      };
+
+      // Chart.Legend.prototype.afterFit = function() {
+      //   this.height = this.height + 50;
+      // };
+      var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+
+    }
+</script>
+
+<script>
+   google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Sales'],
+          ['Jan 2019',  800],
+          ['Feb 2019', 900],
+          ['Mar 2019',  1000],
+          ['Apr 2019',  950],
+          ['May 2019',  1000],
+          ['June 2019',  800],
+          ['July 2019',  850],
+          ['Aug 2019',  900],
+          ['Sept 2019',  850],
+          ['Oct 2019',  800],
+          ['Nov 2019',  750],
+          ['Dec 2019',  700]
+        ]);
+
+        var options = {
+          
+           hAxis: {
+                  format: 'year',
+                  textStyle:{color: '#000'},
+                  viewWindow: {
+                    min: [7, 30, 0],
+                    max: [17, 30, 0]
+                  },
+                  gridlines: {
+                        color: 'transparent'
+                    }
+                },
+         chartArea: {
+                      left: 40,
+                      top: 10,
+                      width: 800,
+                      height: 140
+                  },
+          vAxis: {
+                  textStyle:{color: '#000'},
+                  baselineColor: '#000',
+                  gridlines: {
+                        color: 'transparent'
+                    }
+
+                },
+          legend: 'none',
+          backgroundColor: 'transparent',
+          colors: ['#6FBC20']
+        };
+
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div_area'));
+        chart.draw(data, options);
+      }
+</script>
+
+<script>
+  google.charts.load('current', {packages: ['corechart', 'line']});
+google.charts.setOnLoadCallback(drawBackgroundColor);
+
+function drawBackgroundColor() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('number', 'X');
+      data.addColumn('number', 'Dogs');
+
+      data.addRows([
+        [1, 6],   [1, 10],  [2, 23],  [3, 17],  [4, 18],  [5, 9],
+        [6, 11],  [7, 27],  [8, 33],  [9, 40],  [10, 32], [11, 35],
+        [12, 30], [13, 40], [14, 42], [15, 47], [16, 44], [17, 48],
+        [18, 52], [19, 54], [20, 42], [21, 55], [22, 56], [23, 57],
+        [24, 60], [25, 50], [26, 52], [27, 51], [28, 49], [29, 53],
+        [30, 55], [31, 60], [32, 61], [33, 59], [34, 62], [35, 65],
+        [36, 62], [37, 58], [38, 55], [39, 61], [40, 64], [41, 65],
+        [42, 63], [43, 66], [44, 67], [45, 69], [46, 69], [47, 70],
+        [48, 72], [49, 68], [50, 66], [51, 65], [52, 67], [53, 70],
+        [54, 71], [55, 72], [56, 73], [57, 75], [58, 70], [59, 68],
+        [60, 64], [61, 60], [62, 65], [63, 67], [64, 68], [65, 69],
+        [66, 70], [67, 72], [68, 75], [69, 80]
+      ]);
+
+      var options = {
+        hAxis: {
+          textPosition: 'none',
+          gridlines: {
+                color: 'transparent'
+            }
+        },
+        vAxis: {
+          textPosition: 'none',
+          gridlines: {
+                color: 'transparent'
+            }
+        },
+         chartArea: {
+                      left: 0,
+                      top: 10,
+                      width: 500,
+                      height: 100
+                  },
+        legend: 'none',
+          backgroundColor: 'transparent',
+          colors: ['#6FBC20'],
+          baselineColor: '#fff',
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div_line'));
+      chart.draw(data, options);
+    }
+</script>
+<script>
+  google.charts.load('current', {packages: ['corechart', 'line']});
+google.charts.setOnLoadCallback(drawBackgroundColor);
+
+function drawBackgroundColor() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('number', 'X');
+      data.addColumn('number', 'Dogs');
+
+      data.addRows([
+        [1, 6],   [1, 10],  [2, 23],  [3, 17],  [4, 18],  [5, 9],
+        [6, 11],  [7, 27],  [8, 33],  [9, 40],  [10, 32], [11, 35],
+        [12, 30], [13, 40], [14, 42], [15, 47], [16, 44], [17, 48],
+        [18, 52], [19, 54], [20, 42], [21, 55], [22, 56], [23, 57],
+        [24, 60], [25, 50], [26, 52], [27, 51], [28, 49], [29, 53],
+        [30, 55], [31, 60], [32, 61], [33, 59], [34, 62], [35, 65],
+        [36, 62], [37, 58], [38, 55], [39, 61], [40, 64], [41, 65],
+        [42, 63], [43, 66], [44, 67], [45, 69], [46, 69], [47, 70],
+        [48, 72], [49, 68], [50, 66], [51, 65], [52, 67], [53, 70],
+        [54, 71], [55, 72], [56, 73], [57, 75], [58, 70], [59, 68],
+        [60, 64], [61, 60], [62, 65], [63, 67], [64, 68], [65, 69],
+        [66, 70], [67, 72], [68, 75], [69, 80]
+      ]);
+
+      var options = {
+        hAxis: {
+          textPosition: 'none',
+          gridlines: {
+                color: 'transparent'
+            }
+        },
+        vAxis: {
+          textPosition: 'none',
+          gridlines: {
+                color: 'transparent'
+            }
+        },
+         chartArea: {
+                      left: 0,
+                      top: 10,
+                      width: 500,
+                      height: 80
+                  },
+        legend: 'none',
+          backgroundColor: 'transparent',
+          colors: ['#6FBC20'],
+          baselineColor: '#fff',
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div_line2'));
+      chart.draw(data, options);
+    }
+</script>
+<script>
+  google.charts.load('current', {packages: ['corechart', 'line']});
+google.charts.setOnLoadCallback(drawBackgroundColor);
+
+function drawBackgroundColor() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('number', 'X');
+      data.addColumn('number', 'Dogs');
+
+      data.addRows([
+        [1, 6],   [1, 10],  [2, 23],  [3, 17],  [4, 18],  [5, 9],
+        [6, 11],  [7, 27],  [8, 33],  [9, 40],  [10, 32], [11, 35],
+        [12, 30], [13, 40], [14, 42], [15, 47], [16, 44], [17, 48],
+        [18, 52], [19, 54], [20, 42], [21, 55], [22, 56], [23, 57],
+        [24, 60], [25, 50], [26, 52], [27, 51], [28, 49], [29, 53],
+        [30, 55], [31, 60], [32, 61], [33, 59], [34, 62], [35, 65],
+        [36, 62], [37, 58], [38, 55], [39, 61], [40, 64], [41, 65],
+        [42, 63], [43, 66], [44, 67], [45, 69], [46, 69], [47, 70],
+        [48, 72], [49, 68], [50, 66], [51, 65], [52, 67], [53, 70],
+        [54, 71], [55, 72], [56, 73], [57, 75], [58, 70], [59, 68],
+        [60, 64], [61, 60], [62, 65], [63, 67], [64, 68], [65, 69],
+        [66, 70], [67, 72], [68, 75], [69, 80]
+      ]);
+
+      var options = {
+        hAxis: {
+          textPosition: 'none',
+          gridlines: {
+                color: 'transparent'
+            }
+        },
+        vAxis: {
+          textPosition: 'none',
+          gridlines: {
+                color: 'transparent'
+            }
+        },
+         chartArea: {
+                      left: 0,
+                      top: 10,
+                      width: 500,
+                      height: 80
+                  },
+        legend: 'none',
+          backgroundColor: 'transparent',
+          colors: ['#6FBC20'],
+          baselineColor: '#fff',
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div_line3'));
+      chart.draw(data, options);
+    }
+</script>
+
+<script type="text/javascript">
+function wallet_logout(val)
+{
+ var wallet_id=val;
+    $.ajax({
+            type: "post",
+            url: "/Wallet-logout",
+            data : {'wallet_id':wallet_id},
+            success: function(data)
+            {
+              if(data=='success')
+              {
+                alert('You are logged out successfully from your Wallet.');
+                location.reload();
+              }
+              else 
+              {
+                alert('something is wrong please try again');
+                location.reload();
+              }
+      
+            }
+        });
+}
+</script>
+
+
+
+
+
+
+
+
+

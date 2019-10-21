@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+     <title>Rowan Energy</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/assets/images/favicon.png">
+  <!-- Bootstrap Core CSS -->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/assets/css/bootstrap-dropdownhover.min.css" rel="stylesheet"/>
+  <!-- Animate CSS -->
+    <link href="/assets/css/animate.css" rel="stylesheet"/>
+    <!-- hover-min CSS -->
+    <link href="/assets/css/hover-min.css" rel="stylesheet"/>
+    <!-- yamm css -->
+    <link href="/assets/css/yamm.css" rel="stylesheet"/>
+    <!-- Font-awesome web fonts with css -->
+    <link href="/assets/css/fontawesome-all.css" rel="stylesheet" type="text/css"/>
+    <!-- Font-awesome web fonts with css -->
+    <!-- loader css -->
+    <link href="/assets/css/loader.css" rel="stylesheet"/>
+  <!-- Custom CSS -->
+    <link href="/assets/css/custom.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Oxygen:300,400,700" rel="stylesheet">
+     <link rel="stylesheet" href="/assets/css/jquery-ui.css">
+       <link rel="stylesheet" href="/admin_assets/css/jquery.dataTables.min.css">
+
+       <style>
+         .transaction-box{
+          background-color: #fff;
+          box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+          padding: 20px !important;
+         }
+         .transaction-box table th, .transaction-box table td{
+          font-size: 13px;
+         }
+         
+         .transaction-box table th:first-child {
+          width: 15% !important;
+         }
+         .dataTables_length{
+          display: none !important;
+         }
+         .transaction-box .green-heading{
+          margin-bottom: 0px;
+         }
+         .dataTables_filter input {
+              height: 34px;
+              border: 1px solid #ddd;
+              border-radius: 5px;
+              width: 200px;
+          }
+       </style>
+</head>
+<body>
+<div id="warpper" >
+<!-- Header html -->
+<!-- Header html end -->
+
+
+
+<div id="main">
+  <header class="header-main dashboard-header" id="dash-head">
+    <div class="container-fluid">
+        <!-- <nav class="navbar navbar-expand-lg navbar-light"> -->
+            <a class="navbar-brand" href="/Dashboard"><img src="/assets/images/logo.png" align="horse chain logo"></a>
+             <!-- <span id="menuToggle" style="font-size:20px;cursor:pointer" >&#9776;</span> -->
+               <ul class="navbar-nav ml-auto">
+                   <!--  <li class="nav-item dropdown notification-icon">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="/assets/images/other/notify.png" alt="notify">
+                        <span class="badge">9</span>
+                        </a>
+                       <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right">
+                  <li class="dropdown-menu-header">
+                    <h6 class="dropdown-header m-0"><span class="grey darken-2">Notifications</span><span class="notification-tag badge badge-default badge-danger float-right m-0">5 New</span></h6>
+                  </li>
+                    <li class="scrollable-container media-list w-100 ps-container ps-theme-dark">
+                      <a href="javascript:void(0)">
+                        <div class="media">
+                          <div class="media-left align-self-center">
+                            <i class="ft-plus-square icon-bg-circle bg-cyan"></i>
+                          </div>
+                          <div class="media-body">
+                            <h6 class="media-heading">You have new order!</h6>
+                            <p class="notification-text">Lorem ipsum dolor sit amet, consectetuer elit.</p><small>
+                              <time class="media-meta text-muted">30 minutes ago</time></small>
+                          </div>
+                        </div>
+                       </a>
+                      </li>
+                     <li class="dropdown-menu-footer"><a class="dropdown-item read-mor-link text-muted text-center" href="all-notification.php">Read all notifications</a></li>
+                </ul>
+                    </li> -->
+                    
+                   
+                </ul>
+        <!-- </nav> -->
+    </div>
+</header>
+ <style>
+       .error_validate {color: red;}
+       .title{padding: 0 50px 20px;}
+</style>
+
+<section class="dash-inner-sec dash-inner-pad">
+    <div class="container-fluid">
+        <div class="row">
+         <!--  <% if(success_msg!=undefined){ %>
+                        <span class="flash_msg" style="color:green;"><%= success_msg %></span>
+                        <% }%> -->
+             <div class="col-lg-12 col-md-12">
+                <div class="transaction-box">
+                  <h5 class="green-heading">Blockchain Explorer</h5>
+                <div class="table-responsive">
+
+                  <% if(all_transaction !="" && all_transaction!=null)
+                        { %>
+                        <table id="recent-orders1" class="table table-hover table-xl mb-0">
+                        <thead>
+                        <tr>
+                        
+                        <th class="border-top-0">Transation ID </th>
+                        <th class="border-top-0">Transaction Type</th>
+                        <th class="border-top-0">Block ID </th>
+                        <!-- <th class="border-top-0">Sender ID </th>
+                        <th class="border-top-0">Recipient ID </th> -->
+                        <th class="border-top-0">Date </th>
+                        <!-- <th class="border-top-0">Amount </th>     -->
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <%  all_transaction.forEach(function (transaction) {%>
+                    
+                        <tr>
+                        <td class="border-top-0"><%-transaction.hash%></td>
+                        <td class="border-top-0">Sent </td>     
+                        <td class="border-top-0"><%-transaction.block_id%></td>
+                        <!-- <td class="border-top-0"><%-transaction.sender_wallet_address%></td>
+                        <td class="border-top-0"><%-transaction.receiver_wallet_address%></td> -->
+                        <% 
+                        var tr_date=transaction.created_at; 
+                        var date1 = dateFormat(tr_date, "yyyy/mm/dd h:m:s");
+                        %>
+                        <td class="border-top-0"><%-date1%></td>
+                        <!-- <td class="border-top-0"><%-transaction.amount%> <%-transaction.token_type%></td> -->
+                     
+                        
+                        </tr>
+                        <%  }); %>
+                        </tbody>
+                        </table>
+
+                       <% } else { %>
+                              <p>No Transactions.</p>
+                        <% } %>
+                        </div>
+                </div>
+             </div>
+        </div>
+    </div>
+</section>
+
+ </div>
+</div>
+  <!-- JQuery -->
+        <script type="text/javascript" src="/assets/js/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+        <!-- dropdownhover effects JavaScript -->
+        <script type="text/javascript" src="/assets/js/bootstrap-dropdownhover.min.js"></script>
+        <!-- Owl JavaScript -->
+        <script type="text/javascript" src="/assets/js/owl.carousel.min.js"></script>
+        <!-- wow JavaScript -->
+        <script type="text/javascript" src="/assets/js/wow.min.js"></script>
+        <!-- video player JavaScript -->
+
+        <!-- Custom JavaScript -->
+        <script type="text/javascript" src="/assets/js/custom.js"></script>    
+ </body>
+</html>
+
+<!-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script> -->
+ <script src="/admin_assets/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#recent-orders1').DataTable({
+       "order": [],
+    });
+
+} );
+</script>
+
+
+

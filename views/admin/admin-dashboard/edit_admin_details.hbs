@@ -1,0 +1,117 @@
+{{> admin_inner_header}}
+{{> admin_inner_sidebar}}
+<div class="content-wrapper right-side">
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                   <section class="content-header">
+                    <h3> Edit Admin Profile </h3>
+                  
+          </section>
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  {{#if expressFlash.edit_fail}}
+                    <div class="alert alert-danger">{{expressFlash.edit_fail}}</div>
+                  {{/if}}
+
+                  {{#if expressFlash.edit_success}}
+                    <div class="alert alert-success">{{expressFlash.edit_success}}</div>
+                  {{/if}}
+                  <form class="forms-sample" id="edit_user_form" action='/update2-profile-admin' method='post' enctype="multipart/form-data">
+                    <div class="form-group">
+                      <label for="exampleInputName1">Name <span style="color: red">*</span></label>
+                      <input type="text" name="user_name" class="form-control" id="exampleInputName1" placeholder="Name" data-rule-required="true" data-msg-required="Please Enter Name." value="{{name}}">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail3">Email address <span style="color: red">*</span></label>
+                      <input type="email" name="user_email" class="form-control" id="" placeholder="Email" data-rule-required="true" data-rule-email="true" data-msg-required="Please Enter valid Email." value="{{email}}">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail3">Mobile Number <span style="color: red">*</span></label>
+                      <input type="text" name="mobile_number" class="form-control" id="" placeholder="Mobile No." data-rule-required="true" data-msg-required="10 digit mobile number is mandatory." onkeypress="return isNumberKey(event);" data-rule-minlength="10" data-msg-minlength="Please Enter Minimum 10 Digits." data-rule-maxlength="10" data-msg-maxlength="You Can't Enter More Than 10 Digits." value="{{mobile}}">
+                    </div>
+                <!--     <div class="form-group">
+                      <label for="exampleInputEmail3">Contract Address <span style="color: red">*</span></label>
+                      <input type="text" name="wallet_adddress" class="form-control" id="" placeholder="Contract Address" data-rule-required="true" data-msg-required="Please Enter Contract Address." value="{{contract_address}}">
+                    </div> -->
+                    <div class="form-group">
+                      <label>Image upload</label>
+                      <!-- <input type="file" class="file-upload-default"> -->
+                      <div class="input-group col-xs-12">
+                         <input class="form-control" type="file" name="image">
+                        <!-- <input name="user_profile"  type="file" class="form-control file-upload-info" placeholder="Upload Image">
+                        <span class="input-group-append">
+                     </span> -->
+                      </div>
+                    </div>
+   
+
+                  {{#if profile_image}} 
+                   <img id="pro_img" src="upload_admin_profile/{{profile_image}}" style="width: 80px;height: 80px;"><span onclick="remove_image()"><i class="fa fa-times" aria-hidden="true" id="icon_re"></i></span>
+                   <input type='hidden' name='user_pre_image' value="{{profile_image}}">
+                  {{else}}
+                   <img src="admin_assets/images/faces-clipart/pic-1.png">
+                   {{/if}}
+                    
+                    
+                    <input type='hidden' name='user_m_id' value="{{user_main_id}}">
+                    
+              
+              
+                    <button type="submit" class="btn btn-success mr-2">Submit</button>
+                    <a href="/admin-dashboard" class="btn btn-light">Cancel</a>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  {{> admin_inner_footer}}
+  <script type="text/javascript">
+
+               $(document).ready(function (){
+               $('#edit_user_form').validate({
+                     onfocusout: function(element) {
+                           this.element(element);
+                     },
+                     errorClass: 'error_validate',
+                     errorElement:'span',
+                     highlight: function(element, errorClass) {
+                      $(element).removeClass(errorClass);
+                     }
+                   });
+
+               });
+</script>
+
+<script type="text/javascript">
+  
+  function remove_image(){
+    var checkstr =  confirm('Are You Sure You Want To Remove Profile Image.?');
+      if(checkstr == true){
+           $.ajax({
+                      type : 'POST',
+                      url  : '/remove_profile_image',
+                      
+                      success:function(resp)
+                      {
+                       // alert(resp);
+                        $('#pro_img').hide();  
+                        $('#icon_re').hide();  
+                        
+                      }
+                        
+                        
+            });
+      }else{
+      return false;
+      }
+
+   
+  }
+
+</script>
+
+
+

@@ -1,0 +1,117 @@
+{{> admin_inner_header}}
+{{> admin_inner_sidebar}}
+<div class="content-wrapper right-side">
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                   <section class="content-header">
+                    <h3> Edit Team Members </h3>
+                    <ol class="breadcrumb">
+                        {{!-- <li><a href=""><i class="fa fa-dashboard"></i> Home</a></li> --}}
+                        <li><a href="javascript:void(0);">Team Members</a></li>
+                        <li><a href="javascript:void(0);" class="active">Edit Member</a></li>
+                    </ol>
+          </section>
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+
+                  <form class="forms-sample" id="edit_user_form" action='/update-team-member-data' method='post' enctype="multipart/form-data">
+                    <div class="form-group">
+                      <label for="exampleInputName1">Member Name <span style="color: red">*</span></label>
+                      <input type="text" name="member_name" class="form-control" id="exampleInputName1" placeholder="Member Name" data-rule-required="true" data-msg-required="Please Enter Member Name." value="{{memberDetails.member_name}}">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="exampleInputName1">Member Designation <span style="color: red">*</span></label>
+                      <input type="text" name="member_designation" class="form-control" id="" placeholder="Member Designation" data-rule-required="true" data-msg-required="Please Enter Member Designation." value="{{memberDetails.member_sub_title}}">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="exampleInputName1">Short Description <span style="color: red">*</span></label>
+                      <input type="text" name="member_desc" class="form-control" id="" placeholder="Short Description" data-rule-required="true" data-msg-required="Please Enter Short Description." value="{{memberDetails.member_description}}">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="exampleInputEmail3">Member Email <span style="color: red">*</span></label>
+                      <input type="email" name="member_email" class="form-control" id="" placeholder="Member Email" value="{{memberDetails.member_email}}" data-rule-required="true" data-msg-required="Please Enter Member Email.">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail3">Mobile Number <span style="color: red">*</span></label>
+                      <input type="text" name="mobile_number" class="form-control" id="" placeholder="Mobile No."  value="{{memberDetails.member_phone}}" data-rule-required="true" data-msg-required="Please Enter Mobile Number.">
+                    </div>
+
+                   <!--  onkeypress="return isNumberKey(event);" data-rule-minlength="10" data-msg-minlength="Please Enter Minimum 10 Digits." data-rule-maxlength="10" data-msg-maxlength="You Can't Enter More Than 10 Digits." -->
+
+                    <div class="form-group">
+                      <label>File upload <span style="color: red">*</span></label>
+                      <input type="file" class="file-upload-default">
+                      <div class="input-group col-xs-12">
+                        <input name="user_profile"  type="file" class="form-control file-upload-info" placeholder="Upload Image">
+                        <span class="input-group-append"></span>
+                      </div>
+                    </div>
+
+                    {{#if memberDetails.member_image}}
+                   <img src="/uploads/team-member-profiles/{{memberDetails.member_image}}" style="margin-bottom:25px; width: 80px;height: 80px;">
+                  {{else}}
+                   <img src="/images/faces-clipart/pic-1.png">
+                   {{/if}}
+
+                   
+                     <!-- <img src="/uploads/team-member-profiles/{{memberDetails.member_image}}" style="margin-bottom:25px; width: 80px;height: 80px;"> -->
+                      <input type='hidden' name='user_m_id' value={{memberDetails._id}}>
+                     <input type='hidden' name='user_pre_image' value={{memberDetails.member_image}}>
+
+                   <!--  <div class="form-group">
+                      <label for="exampleInputEmail3">Facebook URL</label>
+                      <input type="text" name="facebook_url" class="form-control" id="" placeholder="Facebook URL" value="{{memberDetails.member_facebook}}">
+                    </div>
+
+
+                    <div class="form-group">
+                      <label for="exampleInputEmail3">Twitter URL</label>
+                      <input type="text" name="twitter_url" class="form-control" id="" placeholder="Twitter URL" value="{{memberDetails.member_twitter}}">
+                    </div>
+
+
+                    <div class="form-group">
+                      <label for="exampleInputEmail3">LinkedIn URL</label>
+                      <input type="text" name="linkedin_url" class="form-control" id="" placeholder="LinkedIn URL" value="{{memberDetails.member_linkedin}}">
+                    </div> -->
+
+                    <div class="form-group">
+                    <label for="exampleFormControlSelect2">Status <span style="color: red">*</span></label>
+                    <select class="form-control" id="" name="member_status" data-rule-required="true" data-msg-required="Please Select Status.">
+                       {{#select memberDetails.user_status}}
+                      <option value="">Select Status</option>
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                       {{/select}}
+                    </select>
+                  </div>
+                    <button type="submit" class="btn btn-success mr-2">Submit</button>
+                    <a href="/members-list" class="btn btn-light">Cancel</a>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  {{> admin_inner_footer}}
+  <script type="text/javascript">
+
+               $(document).ready(function (){
+               $('#edit_user_form').validate({
+                     onfocusout: function(element) {
+                           this.element(element);
+                     },
+                     errorClass: 'error_validate',
+                     errorElement:'span',
+                     highlight: function(element, errorClass) {
+                      $(element).removeClass(errorClass);
+                     }
+                   });
+
+               });
+</script>

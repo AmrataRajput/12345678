@@ -1,0 +1,109 @@
+{{> admin_inner_header}}
+{{> admin_inner_sidebar}}
+<div class="content-wrapper right-side">
+          <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+              <div class="card">
+                   <section class="content-header">
+                    <h3> Add Team Members </h3>
+                    <ol class="breadcrumb">
+                        {{!-- <li><a href=""><i class="fa fa-dashboard"></i> Home</a></li> --}}
+                        <li><a href="javascript:void(0);">Team Members</a></li>
+                        <li><a href="javascript:void(0);" class="active">Add Member</a></li>
+                    </ol>
+          </section>
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+
+                  {{#if expressFlash.fail}}
+                    <div class="alert alert-danger">{{expressFlash.fail}}</div>
+                  {{/if}}
+
+                  <form class="forms-sample" id="edit_user_form" action='/submit-team-member-data' method='post' enctype="multipart/form-data">
+                    <div class="form-group">
+                      <label for="exampleInputName1">Member Name <span style="color: red">*</span></label>
+                      <input type="text" name="member_name" class="form-control" id="exampleInputName1" placeholder="Member Name" data-rule-required="true" data-msg-required="Please Enter Member Name." value="">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="exampleInputName1">Member Designation <span style="color: red">*</span></label>
+                      <input type="text" name="member_designation" class="form-control" id="" placeholder="Member Designation" data-rule-required="true" data-msg-required="Please Enter Member Designation." value="">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="exampleInputName1">Short Description <span style="color: red">*</span></label>
+                      <input type="text" name="member_desc" class="form-control" id="" placeholder="Short Description" data-rule-required="true" data-msg-required="Please Enter Short Description." value="">
+                    </div>
+
+                    <div class="form-group">
+                      <label for="exampleInputEmail3">Member Email <span style="color: red">*</span></label>
+                      <input type="email" name="member_email" class="form-control" id="" placeholder="Member Email" value="" data-rule-required="true" data-msg-required="Please Enter Member Email.">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail3">Mobile Number <span style="color: red">*</span></label>
+                      <input type="text" name="mobile_number" class="form-control" id="" placeholder="Mobile No."  data-msg-maxlength="You Can't Enter More Than 10 Digits." value="" data-rule-required="true" data-msg-required="Please Enter Mobile Number.">
+                    </div>
+
+                     <!-- onkeypress="return isNumberKey(event);" data-rule-minlength="10" data-msg-minlength="Please Enter Minimum 10 Digits." data-rule-maxlength="10" -->
+
+                    <div class="form-group">
+                      <label>File upload <span style="color: red">*</span></label>
+                      <input type="file" class="file-upload-default">
+                      <div class="input-group col-xs-12">
+                        <input name="user_profile"  type="file" class="form-control file-upload-info" placeholder="Upload Image" data-rule-required="true" data-msg-required="Please Upload Profile Picture." id="user_profile">
+                        <span class="input-group-append"></span>
+                      </div>
+                      <span class="error_validate" for="user_profile"></span>
+                    </div>
+
+                   <!--  <div class="form-group">
+                      <label for="exampleInputEmail3">Facebook URL</label>
+                      <input type="text" name="facebook_url" class="form-control" id="" placeholder="Facebook URL" value="">
+                    </div>
+
+
+                    <div class="form-group">
+                      <label for="exampleInputEmail3">Twitter URL</label>
+                      <input type="text" name="twitter_url" class="form-control" id="" placeholder="Twitter URL" value="">
+                    </div>
+
+
+                    <div class="form-group">
+                      <label for="exampleInputEmail3">LinkedIn URL</label>
+                      <input type="text" name="linkedin_url" class="form-control" id="" placeholder="LinkedIn URL" value="">
+                    </div> -->
+
+                    <div class="form-group">
+                    <label for="exampleFormControlSelect2">Status <span style="color: red">*</span></label>
+                    <select class="form-control" id="" name="member_status" data-rule-required="true" data-msg-required="Please Select Status.">
+                      <option value="">Select Status</option>
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
+                    </select>
+                  </div>
+                    <button type="submit" class="btn btn-success mr-2">Submit</button>
+                    <a href="/members-list" class="btn btn-light">Cancel</a>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  {{> admin_inner_footer}}
+  <script type="text/javascript">
+
+               $(document).ready(function (){
+               $('#edit_user_form').validate({
+                     onfocusout: function(element) {
+                           this.element(element);
+                     },
+                     errorClass: 'error_validate',
+                     errorElement:'span',
+                     highlight: function(element, errorClass) {
+                      $(element).removeClass(errorClass);
+                     }
+                   });
+
+               });
+</script>

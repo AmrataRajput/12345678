@@ -1,0 +1,14 @@
+{
+	"test":{
+		"url":"mongodb://localhost/rowan_energy_db",
+		"jwt_token":"123456"
+	},
+
+	"development":{
+
+		"url":"mongodb://Rowan_user:Rowan_user123@45.252.190.32:27017/Rowan_energy",
+		"jwt_token":"789456"
+	}
+}
+
+

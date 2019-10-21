@@ -1,0 +1,39 @@
+<%- include('../templates/header') %>
+<section class="dash-inner-sec">
+    <div class="container">
+        <div class="row">
+             <div class="col-lg-10 offset-lg-1 col-md-12">
+                 <div class="dashboard-box">
+                     <div class="create-wallet-block">
+                           <h3 class="main-heading">Rowan Energy</h3> 
+                           <h4 class="green-heading">Congratulations!</h4>
+                           <p class="head-commn-text">Your wallet is successfully Created. Here is your wallet address.</p>
+                          <div class="input-group input-dash">
+                             <input class="form-control" type="text" id="wallet_address" placeholder="" value="<% if(wallet_address!='') { %><%=wallet_address%><% } %>" readonly="">
+                             <div class="input-group-append">
+                            <a href="javascript:void(0);" onclick="myFunction()"><span class="input-group-text" id="basic-addon2">Copy</span></a>
+                          </div>
+                        </div> 
+                          <div class="text-center for-success">
+                              <a href="/Dashboard" class="btn btn-common light-green">Continue</a>
+                          </div>
+                        </div>
+                 </div>
+             </div>
+        </div>
+    </div>
+</section>
+<%- include('../templates/footer') %>
+<script type="text/javascript">
+function myFunction() {
+  var copyText = document.getElementById("wallet_address");
+  if($('#wallet_address').val() !="")
+  {
+  copyText.select();
+  document.execCommand("copy");
+  alert("Wallet Address is copied.");
+  }  
+}  
+</script>
+
+

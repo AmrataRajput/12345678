@@ -1,0 +1,75 @@
+ </div>
+</div>
+  <!-- JQuery -->
+        <script type="text/javascript" src="/assets/js/jquery-3.3.1.min.js"></script>
+        <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+        <!-- dropdownhover effects JavaScript -->
+        <script type="text/javascript" src="/assets/js/bootstrap-dropdownhover.min.js"></script>
+        <!-- Owl JavaScript -->
+        <script type="text/javascript" src="/assets/js/owl.carousel.min.js"></script>
+        <!-- wow JavaScript -->
+        <script type="text/javascript" src="/assets/js/wow.min.js"></script>
+        <!-- video player JavaScript -->
+
+        <!-- Custom JavaScript -->
+        <script type="text/javascript" src="/assets/js/custom.js"></script>
+        <script>
+            $(document).ready(function(){
+                $('#menuToggle').click(function(){
+                    $("#warpper").toggleClass("side-menu");
+                });
+            });
+    
+        </script>
+        <script type="text/javascript">
+            var url = $(location).attr('href');
+            var segments = url.split( '/' );
+            var action = segments[3];
+            if(action=='Set-you-wallet' || action=='Create-wallet' || action=='Create-wallet-success' || action=='Verify-key')
+            {
+                $('#cr-wallet').addClass("active");
+            }
+            else if(action=='Import-wallet' || action=='Import-wallet-success')
+            {
+                $('#im-wallet').addClass("active");
+            }
+            else if(action=='Profile' || action=='Change-password')
+            {
+                $('#pro-menu').addClass("active");
+            } 
+            else if(action=='Dashboard')
+            {
+                $('#dashboard').addClass("active");
+            }
+            else if(action=='Transaction-history')
+            {
+                $('#tran-hist').addClass("active");
+            }
+        </script>
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    var get_user_id=$('#user_id').val();
+    // alert(get_user_id);
+    $.ajax({
+            type: "post",
+            url: "/user-wallet-login-status",
+            data : {'get_user_id':get_user_id},
+            success: function(data)
+            {
+                // alert(data);
+              if(data=='yes')
+              {
+                $('#create-and-import').hide();
+              }
+              else 
+              {
+                 $('#create-and-import').show();
+              } 
+            }
+        });
+  });
+</script>
+ </body>
+</html>

@@ -1,0 +1,99 @@
+{{> admin_inner_header}}
+{{> admin_inner_sidebar}}
+<style>
+  .card.card-statistics .card-body {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+</style>
+
+
+<div class="content-wrapper">
+          <div class="row">
+            
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+              <div class="card card-statistics">
+                <div class="card-body">
+                  <div class="media">
+                    <i class="mdi mdi-account-location text-info icon-lg mr-3 align-self-center"></i>
+                    <div class="media-body align-self-center">
+                       <p class="mb-0 text-left">Total Users </p>
+                      <div class="fluid-container">
+                        <h3 class="font-weight-medium mb-0">{{total_users_s}}</h3>
+                      </div>
+                    </div>
+                  </div>
+                {{!--   <p class="text-muted mt-3 mb-0">
+                    <i class="mdi mdi-reload mr-1" aria-hidden="true"></i> Product-wise sales
+                  </p> --}}
+                </div>
+              </div>
+            </div>
+
+           
+            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 grid-margin stretch-card">
+              <div class="card card-statistics">
+                <div class="card-body">
+                   <div class="media">
+                    <i class="mdi mdi-receipt text-warning icon-lg mr-3 align-self-center"></i>
+                    <div class="media-body align-self-center">
+                        <p class="mb-0 ">Total Orders</p>
+                      <div class="fluid-container">
+                        <h3 class="font-weight-medium  mb-0">{{total_orders_s}}</h3>
+                      </div>
+                    </div>
+                  </div>
+               {{!--    <p class="text-muted mt-3 mb-0">
+                    <i class="mdi mdi-bookmark-outline mr-1" aria-hidden="true"></i> Product-wise sales
+                  </p> --}}
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card">
+              <div class="card card-statistics">
+                <div class="card-body">
+                   <div class="media">
+                    <i class="mdi mdi-receipt text-warning icon-lg mr-3 align-self-center"></i>
+                    <div class="media-body align-self-center">
+                        <p class="mb-0 ">Total RWN Balance</p>
+                      <div class="fluid-container">
+                        <h3 class="font-weight-medium  mb-0">{{token_balance}}</h3>
+                      </div>
+                    </div>
+                  </div>
+               {{!--    <p class="text-muted mt-3 mb-0">
+                    <i class="mdi mdi-bookmark-outline mr-1" aria-hidden="true"></i> Product-wise sales
+                  </p> --}}
+                </div>
+              </div>
+            </div>
+        
+             
+
+           
+
+          </div>
+          <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 grid-margin stretch-card">
+              <div class="card card-statistics">
+                <div class="card-body">
+                   <div class="media">
+                    <i class="mdi mdi-receipt text-warning icon-lg mr-3 align-self-center"></i>
+                    <div class="media-body align-self-center">
+                        <p class="mb-0 ">Total Ether Balance</p>
+                      <div class="fluid-container">
+                        <h3 class="font-weight-medium  mb-0">{{ether_balance}}</h3>
+                      </div>
+                    </div>
+                  </div>
+               {{!--    <p class="text-muted mt-3 mb-0">
+                    <i class="mdi mdi-bookmark-outline mr-1" aria-hidden="true"></i> Product-wise sales
+                  </p> --}}
+                </div>
+              </div>
+            </div>
+          </div>
+
+      </div>
+    </div></div></div></div></div></div></div>
+{{> admin_inner_footer}}

@@ -1,0 +1,79 @@
+<%- include('../templates/header') %>
+<section class="dash-inner-sec">
+    <div class="container">
+        <div class="row">
+             <div class="col-lg-10 offset-lg-1 col-md-12">
+                 <div class="dashboard-box">
+                     <div class="create-wallet-block">
+                           <h3 class="main-heading">Rowan Energy</h3> 
+                           <h4 class="green-heading">Verify Your Passphrase</h4>
+                           <p class="head-commn-text">Please enter your passphrase below to conﬁrm your wallet account.</p>
+                           
+
+                            <form id="create-wallet-sub" method="post" action="/submit-create-wallet">
+                          <div class="form-group enter-private-key input-dash">
+                             <input class="form-control" type="text" placeholder="Please enter passphrase to create wallet" name="passphrase" id="passphrase" data-rule-required="true"  data-msg-required="Please enter Passphrase." autocomplete="off">
+                          </div>
+                                 
+                           <span class="error_validate" for="passphrase"></span>
+                           <span id="pass_error" style="color: red; text-align: left !important; display:block" ></span>
+                          <input type="hidden" value="<% if(user_passphrase!=''){ %> <%=user_passphrase%><%}%>" name="check_key" id="check_key" />  
+                                
+                          <div class="clearfix note-line">
+                            <span class="float-left">Whoops, I didn't write my passphrase.</span>
+                            <span class="float-right"><a href="">Create a new wallet</a></span>
+                          </div>
+
+                          <div class="text-center">
+                              <input type="submit" name="submit" value="Continue" class="btn btn-common light-green" id="sub-btn">
+                          </div>
+
+                          </form>
+                        </div>
+                 </div>
+             </div>
+        </div>
+    </div>
+</section>
+<%- include('../templates/footer') %>
+<script src="/assets/js/jquery.validate.min.js"></script>
+<script type="text/javascript">
+$('#create-wallet-sub').validate({
+      onfocusout: function(element) {
+      this.element(element);
+      },
+      errorClass: 'error_validate',
+      errorElement:'span',
+      highlight: function(element, errorClass) {
+      $(element).removeClass(errorClass);
+      },
+      submitHandler:function(form)
+         {
+          var passphrase=$('#passphrase').val().trim();
+          var check_key=$('#check_key').val().trim();
+          if(passphrase != check_key && passphrase !="")
+          {
+           $('#pass_error').html('Please enter valid Passphrase.');
+               
+            return false;
+          }
+          else
+          {
+             $('#sub-btn').attr('disabled',true);
+            form.submit();
+           
+          }
+                 
+         }
+      });
+      
+ $("#passphrase").focusin(function(){
+  $("#pass_error").html("");
+});
+      
+      
+</script> 
+
+
+
+

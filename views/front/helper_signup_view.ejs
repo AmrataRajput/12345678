@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rowan Energy</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+	<!-- Bootstrap Core CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="assets/css/bootstrap-dropdownhover.min.css" rel="stylesheet"/>
+	<!-- Animate CSS -->
+    <link href="assets/css/animate.css" rel="stylesheet"/>
+    <!-- hover-min CSS -->
+    <link href="assets/css/hover-min.css" rel="stylesheet"/>
+    <!-- yamm css -->
+    <link href="assets/css/yamm.css" rel="stylesheet"/>
+    <!-- Font-awesome web fonts with css -->
+    <link href="assets/css/fontawesome-all.css" rel="stylesheet" type="text/css"/>
+    <!-- Font-awesome web fonts with css -->
+    <!-- loader css -->
+    <link href="assets/css/loader.css" rel="stylesheet"/>
+	<!-- Custom CSS -->
+    <link href="assets/css/custom.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Oxygen:300,400,700" rel="stylesheet">
+
+     <link rel="stylesheet" href="assets/css/jquery-ui.css">
+</head>
+<body>
+<style>
+       .error_validate {color: red;}
+       .title{padding: 0 50px 20px;}
+</style>
+<section class="login-sec">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 offset-md-1">
+        <div class="signup-inner-box">
+        	<div class="logo-block">
+                  <img src="assets/images/logo.png" align="rowan energy logo">
+                </div>
+           <div class="row align-item-center">
+              <div class="col-lg-6 col-md-5 col-sm-5">
+                 <div class="side-img">
+                  <img src="assets/images/other/side-img.png" align="side img">
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-7 col-sm-7">
+                 <div class="main-outer">
+                   <div class="signup-outer">
+                       <h2>Get more things done with Sign Up platform.</h2>
+                        <p>Access to the most powerful tool in the entire design and web industry.</p>
+                        <h4>Sign Up</h4>
+                    <%= someHelper('5d0ce0eaad82ad679609d480')%>
+                      <form method="post" action="/submit_registration" id="registration">
+                        <div class="form-group">
+                          <input type="text" class="form-control" placeholder="Enter Name" name="name" data-rule-required="true" data-rule-maxlength="24" data-msg-required="Please enter name.">
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control" placeholder="Enter Email" name="email" id="email"  data-rule-required="true" data-rule-email="true" data-msg-required="Please enter email address." data-msg-email="Please enter a valid email address.">
+                        </div>
+                         <% if(err_msg!=undefined){ %>
+                      <span class="error_validate flash_msg"><%= err_msg %></span>
+                     <% }%>
+                    <%  
+                    async function get(iddd){
+                    result1 =await utils_helper.add(iddd);
+                    return result1;
+                    }
+
+                   get('5d0ce0eaad82ad679609d480').then(); 
+
+                    
+                    if(typeof result1 !== 'undefined' && typeof result1 !== '')
+                    { %>
+                    <%-result1%>
+                    <%  } %>
+                      <%-result_cnt%>
+                        <div class="form-group">
+                          <input type="password" class="form-control" placeholder="Password" id="password" name="password" type="password" data-rule-minlength="5" data-rule-maxlength="75" data-rule-required="true"  data-msg-required="Please enter password.">
+                        </div>
+                        <div class="form-group">
+                          <input type="password" class="form-control" placeholder="Confirm Password" data-rule-equalto="#password" name="conf_pass" type="password"  data-rule-required="true" data-msg-equalto="Password and Confirm Password should get match." data-msg-required="Please enter confirm password.">
+                        </div>
+                         <div class="form-group">
+                          <label>
+                            <input type="checkbox" name="check" data-rule-required="true"  data-msg-required="Please accept terms and condition.">
+                            I agree with <a href="/terms-conditions" target="_blank">terms and conditions.</a>
+                          </label>
+                           <br>
+                            <span for="check" class="error_validate"></span>
+                        </div>
+                        <div class="btn-gorup">
+                          <button type="submit" class="btn btn-common" id="submit_signup">Sign Up</button>
+                          <div class="new-link-submit">Already have an acount? <a href="/Login" > Login</a></div>
+                        </div>
+                      </form>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- JQuery -->
+<script type="text/javascript" src="assets/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="assets/js/bootstrap-dropdownhover.min.js"></script>
+<script type="text/javascript" src="assets/js/wow.min.js"></script>
+<script type="text/javascript" src="assets/js/custom.js"></script>
+<script src="/assets/js/jquery.validate.min.js"></script>
+<script type="text/javascript">
+$('#registration').validate({
+      onfocusout: function(element) {
+      this.element(element);
+      },
+      errorClass: 'error_validate',
+      errorElement:'span',
+      highlight: function(element, errorClass) {
+      $(element).removeClass(errorClass);
+      },
+      submitHandler:function(form)
+         {
+           $('#submit_signup').attr('disabled',true);
+           form.submit();
+         }
+      });
+</script>
+<script type="text/javascript">
+$(document).ready(function () {
+var flash_msg=$('.flash_msg').html();
+if(flash_msg!="" && flash_msg!=undefined)
+{
+setTimeout(function(){ $('.flash_msg').html('');},4000);
+}    
+});  
+</script>
+
+
+</body>
+</html>
+
+
+

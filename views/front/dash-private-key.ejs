@@ -1,0 +1,94 @@
+<%- include('../templates/header') %>
+<section class="dash-inner-sec">
+    <div class="container">
+        <div class="row">
+             <div class="col-lg-10 offset-lg-1 col-md-12">
+                 <div class="dashboard-box">
+                     <div class="create-wallet-block">
+
+                           <h3 class="main-heading">Rowan Energy</h3> 
+                           <h4 class="green-heading">Your Passphrase</h4>
+                           <p class="head-commn-text">Below is your passphrase. You must copy it and save it in a secure place.</p>
+                           <form id="create-wallet" method="post" action="/Verify-key">
+                          <div class="input-group input-dash">
+                            <span></span>
+                            <input class="form-control" readonly type="text" placeholder="Please enter passphrase to create wallet" name="passphrase" id="passphrase" data-rule-required="true"  data-msg-required="Please enter Passphrase." value="<% if(passphrase!='') { %> <%=passphrase%> <% } %>" autocomplete="off">
+                             <div class="input-group-append">
+                            <a href="javascript:void(0);" onclick="myFunction()"><span class="input-group-text" id="basic-addon2">Copy</span></a>
+                          </div>
+                        </div>
+                         <span class="error_validate" for="passphrase"></span>
+                
+                        <div class="text-left">
+                          <label class="mb-0">
+                            <input type="checkbox" name="check" data-rule-required="true"  data-msg-required="Please agree with Terms & Conditions.">
+                            <span class="cr"></span>
+                            &nbsp;I agree with <a href="/terms-conditions" target="_blank">terms and conditions.</a>
+                          </label>
+                        </div>
+                         <span class="error_validate" for="check"></span>
+
+                          <div class="text-center mlti-btn">
+                              <a href="javascript:void(0);" download="info.txt" id="download" class="btn btn-common light-green">Download</a>
+                               <input type="submit" name="submit" value="Next" id="submit-wallet" class="btn btn-common light-green">
+                          </div>
+                        </form>
+                        </div>
+                 </div>
+             </div>
+        </div>
+    </div>
+</section>
+<%- include('../templates/footer') %>
+
+<script src="/assets/js/jquery.validate.min.js"></script>
+<script type="text/javascript">
+$('#create-wallet').validate({
+      onfocusout: function(element) {
+      this.element(element);
+      },
+      errorClass: 'error_validate',
+      errorElement:'span',
+      highlight: function(element, errorClass) {
+      $(element).removeClass(errorClass);
+      },
+      submitHandler:function(form)
+         {
+                 $('#submit-wallet').attr('disabled',true);
+                 form.submit();
+         }
+      });
+</script> 
+<script type="text/javascript">
+function myFunction() {
+  var copyText = document.getElementById("passphrase");
+  if($('#passphrase').val() !="")
+  {
+  copyText.select();
+  document.execCommand("copy");
+  alert("Passphrase is copied.");
+  }  
+}  
+</script>
+<script type="text/javascript">
+(function () {
+var textFile = null,
+  makeTextFile = function (text) {
+    var data = new Blob([text], {type: 'text/plain'});
+    if (textFile !== null) {
+      window.URL.revokeObjectURL(textFile);
+    }
+    textFile = window.URL.createObjectURL(data);
+    return textFile;
+  };
+  var create = document.getElementById('download'),
+    textbox = document.getElementById('passphrase');
+  create.addEventListener('click', function () {
+    var link = document.getElementById('download');
+    link.href = makeTextFile(textbox.value);
+  }, false);
+})();
+</script>
+
+
+
