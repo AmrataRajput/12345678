@@ -31,7 +31,7 @@
     "keythereum": "^1.0.4",
     "method-override": "^3.0.0",
     "mkdirp": "^0.5.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "mongodb": "^3.1.13",
     "mongoose": "^5.4.13",
     "multer": "^1.4.1",
